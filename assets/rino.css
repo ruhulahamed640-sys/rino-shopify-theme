@@ -2582,3 +2582,41 @@ html[data-rino-motion-ready="true"] .rino-product-card[data-rino-reveal].is-in-v
  .rino-hero__actions{flex-direction:row;flex-wrap:wrap}
  .rino-hero__actions .rino-btn{width:auto;min-width:145px}
 }
+
+
+/* Desktop header spacing: one search entry and single-line menu labels */
+@media (min-width: 990px) {
+  .rino-header {
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    column-gap: clamp(.7rem, 1.5vw, 1.4rem);
+  }
+  .rino-header__logo {
+    grid-column: 1;
+    min-width: max-content;
+  }
+  .rino-header__nav {
+    grid-column: 2;
+    min-width: 0;
+    justify-self: center;
+  }
+  .rino-header__menu {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: clamp(.65rem, 1.25vw, 1.35rem);
+  }
+  .rino-header__menu > li,
+  .rino-header__link {
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+  }
+  .rino-header__link {
+    font-size: clamp(.76rem, .88vw, .9rem);
+    letter-spacing: .075em;
+  }
+  .rino-header__actions {
+    grid-column: 3;
+    min-width: max-content;
+    gap: .35rem;
+  }
+}
