@@ -14,17 +14,68 @@
         "height_desktop": 680,
         "height_mobile": 540,
         "text_alignment": "left"
-      }
+      },
+      "blocks": {
+        "promo-slide-1": {
+          "type": "promo_slide",
+          "settings": {
+            "kicker": "NEW DROP",
+            "heading": "THE LATEST DROP",
+            "description": "Explore the newest RINO graphic pieces.",
+            "button_label": "SHOP THE DROP",
+            "link": "/collections/all"
+          }
+        },
+        "promo-slide-2": {
+          "type": "promo_slide",
+          "settings": {
+            "kicker": "RINO STUDIO EXCLUSIVE",
+            "heading": "BUILT FOR THE ROTATION",
+            "description": "Independent graphics. Streetwear made to stand out.",
+            "button_label": "EXPLORE ALL TEES",
+            "link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "promo-slide-1",
+        "promo-slide-2"
+      ]
     },
     "marquee": {
       "type": "marquee",
       "blocks": {
-        "m1": { "type": "statement", "settings": { "text": "NO RULES. JUST RINO." } },
-        "m2": { "type": "statement", "settings": { "text": "WEAR YOUR IDENTITY." } },
-        "m3": { "type": "statement", "settings": { "text": "CUSTOM PRINTED STREETWEAR" } },
-        "m4": { "type": "statement", "settings": { "text": "NO RULES. JUST RINO." } }
+        "m1": {
+          "type": "statement",
+          "settings": {
+            "text": "NO RULES. JUST RINO."
+          }
+        },
+        "m2": {
+          "type": "statement",
+          "settings": {
+            "text": "WEAR YOUR IDENTITY."
+          }
+        },
+        "m3": {
+          "type": "statement",
+          "settings": {
+            "text": "CUSTOM PRINTED STREETWEAR"
+          }
+        },
+        "m4": {
+          "type": "statement",
+          "settings": {
+            "text": "NO RULES. JUST RINO."
+          }
+        }
       },
-      "block_order": ["m1", "m2", "m3", "m4"],
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ],
       "settings": {
         "speed": 24,
         "bg_color": "#191919",
