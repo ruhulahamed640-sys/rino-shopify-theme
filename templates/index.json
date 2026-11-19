@@ -1,19 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
-        "eyebrow": "RINO STUDIO — SEASON 01",
-        "heading": "OWN YOUR STREET.",
-        "subtext": "Heavyweight 280GSM custom-printed graphic tees built for bold urban silhouettes. Designed independently. Shipped worldwide.",
-        "primary_cta_label": "SHOP THE DROP",
-        "secondary_cta_label": "OUR STORY",
+        "image": "shopify://shop_images/woman-6468147_1280.jpg",
         "image_position": "center center",
         "image_brightness": 85,
         "overlay_opacity": 75,
         "height_desktop": 680,
         "height_mobile": 540,
-        "text_alignment": "left"
+        "text_alignment": "left",
+        "eyebrow": "RINO STUDIO — SEASON 01",
+        "heading": "OWN YOUR STREET.",
+        "subtext": "Heavyweight 280GSM custom-printed graphic tees built for bold urban silhouettes. Designed independently. Shipped worldwide.",
+        "primary_cta_label": "SHOP THE DROP",
+        "primary_cta_link": "",
+        "secondary_cta_label": "OUR STORY",
+        "secondary_cta_link": ""
       }
     },
     "marquee": {
@@ -51,9 +63,10 @@
         "m4"
       ],
       "settings": {
+        "accessible_label": "Brand statement ticker",
         "speed": 24,
         "bg_color": "#191919",
-        "text_color": "#F4F1EB"
+        "text_color": "#f4f1eb"
       }
     },
     "featured-collection": {
@@ -61,10 +74,13 @@
       "settings": {
         "eyebrow": "LATEST RELEASE",
         "heading": "THE DROP",
+        "collection": "",
         "products_to_show": 4,
         "columns_desktop": 4,
         "show_view_all": true,
-        "view_all_label": "VIEW ALL TEES"
+        "view_all_label": "VIEW ALL TEES",
+        "padding_top": 70,
+        "padding_bottom": 70
       }
     },
     "brand-story": {
@@ -74,17 +90,23 @@
         "eyebrow": "THE RINO MANIFESTO",
         "heading": "WEAR YOUR IDENTITY.",
         "text": "<p>RINO was born from raw concrete, independent graphic art, and unapologetic self-expression. Every tee is cut in a structured boxy streetwear silhouette from combed heavyweight cotton and printed in small studio runs.</p>",
-        "cta_label": "READ OUR STORY"
+        "cta_label": "READ OUR STORY",
+        "cta_link": "",
+        "padding_top": 70,
+        "padding_bottom": 70
       }
     },
     "promotional-banner": {
       "type": "promotional-banner",
       "settings": {
+        "overlay_opacity": 60,
         "eyebrow": "LIMITED GRAPHIC EDITION",
         "heading": "CONCRETE CAPSULE 01",
         "subtext": "Numbered custom screen-printed tees. Once a graphic sells out, it never restocks.",
         "cta_label": "EXPLORE CAPSULE",
-        "overlay_opacity": 60
+        "cta_link": "",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "newsletter": {
@@ -93,42 +115,13 @@
         "eyebrow": "INNER CIRCLE",
         "heading": "FIRST ACCESS TO EVERY DROP.",
         "subtext": "Unlock private drop passwords, limited studio runs, and international restock alerts.",
-        "button_label": "JOIN THE DROP"
+        "button_label": "JOIN THE DROP",
+        "padding_top": 50,
+        "padding_bottom": 70
       }
-    },
-    "promo-slider": {
-      "type": "promo-slider",
-      "blocks": {
-        "promo-slide-1": {
-          "type": "promo_slide",
-          "settings": {
-            "kicker": "NEW DROP",
-            "heading": "THE LATEST DROP",
-            "description": "Explore the newest RINO graphic pieces.",
-            "button_label": "SHOP THE DROP",
-            "link": "/collections/all"
-          }
-        },
-        "promo-slide-2": {
-          "type": "promo_slide",
-          "settings": {
-            "kicker": "RINO STUDIO EXCLUSIVE",
-            "heading": "BUILT FOR THE ROTATION",
-            "description": "Independent graphics. Streetwear made to stand out.",
-            "button_label": "EXPLORE ALL TEES",
-            "link": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "promo-slide-1",
-        "promo-slide-2"
-      ],
-      "settings": {}
     }
   },
   "order": [
-    "promo-slider",
     "hero",
     "marquee",
     "featured-collection",
