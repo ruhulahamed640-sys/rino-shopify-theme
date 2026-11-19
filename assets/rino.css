@@ -2266,3 +2266,18 @@ html[data-rino-motion-ready="true"] .rino-product-card[data-rino-reveal].is-in-v
   .rino-promo-slider--hero .rino-promo-slide__image img{min-height:100px}
   .rino-hero__frame{padding-top:1.25rem}
 }
+
+
+/* Standalone RINO promotional carousel: sits between the header and hero */
+.rino-promo-strip{position:relative;z-index:4;width:100%;padding:14px clamp(12px,2.5vw,36px);background:#101010;border-bottom:1px solid rgba(255,255,255,.12)}
+.rino-promo-slider--standalone{position:relative;width:100%;max-width:1440px;margin:0 auto;border-radius:14px;background:linear-gradient(110deg,rgba(25,25,25,.98),rgba(10,10,10,.98))}
+.rino-promo-slider--standalone .rino-promo-slide{grid-template-columns:minmax(110px,19%) minmax(0,1fr);min-height:112px}
+.rino-promo-slider--standalone .rino-promo-slide__image,.rino-promo-slider--standalone .rino-promo-slide__image img{min-height:112px}
+.rino-promo-slider--standalone .rino-promo-slide__content{padding:14px 22px 24px}
+@media(max-width:749px){
+ .rino-promo-strip{padding:9px 10px}
+ .rino-promo-slider--standalone{border-radius:12px}
+ .rino-promo-slider--standalone .rino-promo-slide{grid-template-columns:29% minmax(0,1fr);min-height:100px}
+ .rino-promo-slider--standalone .rino-promo-slide__image,.rino-promo-slider--standalone .rino-promo-slide__image img{min-height:100px}
+ .rino-promo-slider--standalone .rino-promo-slide__content{padding:10px 11px 22px}
+}
