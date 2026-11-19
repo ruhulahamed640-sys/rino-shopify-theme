@@ -49,6 +49,8 @@
               <article class="rino-promo-slide{% if forloop.first %} is-active{% endif %}" data-rino-promo-slide aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}" {{ block.shopify_attributes }}>
                 {%- if promo_image != blank -%}
                   <div class="rino-promo-slide__image">{{ promo_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(max-width: 749px) 88vw, 520px', alt: promo_heading }}</div>
+                {%- else -%}
+                  <div class="rino-promo-slide__image rino-promo-slide__image--placeholder" aria-hidden="true">{{ 'product-1' | placeholder_svg_tag }}</div>
                 {%- endif -%}
                 <div class="rino-promo-slide__content">
                   {%- if block.settings.kicker != blank -%}<span class="rino-promo-slide__kicker">{{ block.settings.kicker | escape }}</span>{%- endif -%}
