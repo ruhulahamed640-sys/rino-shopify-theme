@@ -47,10 +47,15 @@
         "show_recently_viewed": true,
         "recently_viewed_heading": "RECENTLY VIEWED"
       }
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {}
     }
   },
   "order": [
     "main",
+    "reviews",
     "related-products"
   ]
 }
