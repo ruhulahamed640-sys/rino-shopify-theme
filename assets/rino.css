@@ -1861,3 +1861,220 @@ p:last-child {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* ==========================================================================
+   RINO Collection Controls — refined sort menu and filter surfaces
+   ========================================================================== */
+.rino-collection-toolbar {
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--rino-border, #333333);
+}
+
+.rino-sort-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  z-index: 12;
+}
+
+.rino-sort-control__label {
+  color: var(--rino-text-secondary, #A5A19A);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rino-sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 220px;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--rino-border, #3A3A3A);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #202020, #151515);
+  color: var(--rino-text-primary, #F4F1EB);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.rino-sort-trigger:hover,
+.rino-sort-trigger[aria-expanded="true"] {
+  border-color: var(--rino-accent, #FF5A1F);
+  box-shadow: 0 0 0 3px rgba(255, 90, 31, .10);
+}
+
+.rino-sort-trigger svg {
+  flex: 0 0 auto;
+  color: var(--rino-accent, #FF5A1F);
+  transition: transform .2s ease;
+}
+
+.rino-sort-trigger[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.rino-sort-menu {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  width: max(100%, 240px);
+  max-height: min(360px, 65vh);
+  overflow-y: auto;
+  padding: .45rem;
+  border: 1px solid #3A3A3A;
+  border-radius: 16px;
+  background: #171717;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .48);
+  z-index: 60;
+  transform-origin: top right;
+  animation: rino-sort-enter .16s ease-out;
+}
+
+.rino-sort-menu[hidden] {
+  display: none;
+}
+
+.rino-sort-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 42px;
+  padding: .65rem .8rem;
+  border-radius: 10px;
+  color: #D8D5CF;
+  font-size: .9rem;
+  line-height: 1.3;
+  text-align: left;
+  transition: background .16s ease, color .16s ease;
+}
+
+.rino-sort-option:hover,
+.rino-sort-option:focus-visible {
+  outline: none;
+  background: #292929;
+  color: #FFFFFF;
+}
+
+.rino-sort-option.is-selected {
+  background: rgba(255, 90, 31, .13);
+  color: var(--rino-accent, #FF5A1F);
+  font-weight: 700;
+}
+
+.rino-sort-option__check {
+  color: var(--rino-accent, #FF5A1F);
+  font-weight: 800;
+}
+
+.rino-filters {
+  padding: 1.35rem;
+  background: linear-gradient(155deg, #1D1D1D, #151515);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .14);
+}
+
+.rino-filter-group {
+  padding-block: 1rem;
+}
+
+.rino-filter-group summary {
+  min-height: 30px;
+  color: var(--rino-text-primary, #F4F1EB);
+  transition: color .18s ease;
+}
+
+.rino-filter-group summary:hover {
+  color: var(--rino-accent, #FF5A1F);
+}
+
+.rino-filter-group summary svg {
+  color: var(--rino-text-secondary, #A5A19A);
+  transition: transform .2s ease;
+}
+
+.rino-filter-group[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.rino-filter-checkbox {
+  min-height: 36px;
+  padding: .35rem .45rem;
+  border-radius: 8px;
+  transition: background .18s ease, color .18s ease;
+}
+
+.rino-filter-checkbox:hover {
+  background: rgba(255, 255, 255, .045);
+  color: var(--rino-text-primary, #F4F1EB);
+}
+
+.rino-filter-checkbox input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--rino-accent, #FF5A1F);
+}
+
+.rino-filter-chip {
+  padding: .5rem .8rem;
+  border-radius: 999px;
+  background: rgba(255, 90, 31, .08);
+  border-color: rgba(255, 90, 31, .28);
+}
+
+.rino-filter-chip:hover {
+  background: rgba(255, 90, 31, .15);
+}
+
+@keyframes rino-sort-enter {
+  from { opacity: 0; transform: translateY(-5px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 600px) {
+  .rino-collection-toolbar {
+    align-items: flex-start;
+    gap: .85rem;
+  }
+
+  .rino-sort-control {
+    width: 100%;
+    justify-content: space-between;
+    gap: .65rem;
+  }
+
+  .rino-sort-trigger {
+    min-width: 0;
+    width: min(68%, 260px);
+    min-height: 46px;
+    padding-inline: .8rem;
+    font-size: .82rem;
+  }
+
+  .rino-sort-menu {
+    width: min(100%, 280px);
+  }
+
+  .rino-filters {
+    padding: 1rem;
+    border-radius: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rino-sort-menu { animation: none; }
+  .rino-sort-trigger,
+  .rino-sort-trigger svg,
+  .rino-sort-option,
+  .rino-filter-checkbox,
+  .rino-filter-group summary svg { transition: none; }
+}
