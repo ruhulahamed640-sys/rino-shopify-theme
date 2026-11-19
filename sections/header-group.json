@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Header",
   "type": "header",
@@ -31,40 +40,9 @@
         "show_search": true,
         "show_account": true
       }
-    },
-    "promo-slider": {
-      "type": "promo-slider",
-      "blocks": {
-        "promo-slide-1": {
-          "type": "promo_slide",
-          "settings": {
-            "kicker": "NEW DROP",
-            "heading": "THE LATEST DROP",
-            "description": "Explore the newest RINO graphic pieces.",
-            "button_label": "SHOP THE DROP",
-            "link": "/collections/all"
-          }
-        },
-        "promo-slide-2": {
-          "type": "promo_slide",
-          "settings": {
-            "kicker": "RINO STUDIO EXCLUSIVE",
-            "heading": "BUILT FOR THE ROTATION",
-            "description": "Independent graphics. Streetwear made to stand out.",
-            "button_label": "EXPLORE ALL TEES",
-            "link": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "promo-slide-1",
-        "promo-slide-2"
-      ],
-      "settings": {}
     }
   },
   "order": [
-    "promo-slider",
     "announcement-bar",
     "header"
   ]
