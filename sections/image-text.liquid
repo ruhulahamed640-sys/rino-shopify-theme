@@ -13,7 +13,7 @@
               loading: 'lazy',
               widths: '480, 760, 1000, 1200',
               sizes: '(min-width: 990px) 55vw, 100vw',
-              alt: section.settings.image.alt | default: section.settings.heading | escape
+              alt: section.settings.heading
           }}
         {%- else -%}
           {{ 'collection-1' | placeholder_svg_tag: 'rino-placeholder-svg' }}
@@ -99,20 +99,20 @@
       "id": "padding_top",
       "min": 20,
       "max": 120,
-      "step": 8,
+      "step": 10,
       "unit": "px",
       "label": "Top padding",
-      "default": 68
+      "default": 70
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 20,
       "max": 120,
-      "step": 8,
+      "step": 10,
       "unit": "px",
       "label": "Bottom padding",
-      "default": 68
+      "default": 70
     }
   ],
   "presets": [
