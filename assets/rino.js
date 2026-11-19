@@ -781,3 +781,27 @@ function initRinoHeroInteractions(){
     frame.addEventListener('pointerleave',()=>frame.classList.remove('is-pointer-active'));
   });
 }
+
+
+/* Replay the liquid pour only when the section enters the viewport */
+document.addEventListener('DOMContentLoaded', () => {
+  const liquidSections = document.querySelectorAll('[data-rino-liquid-flow]');
+  if (!liquidSections.length) return;
+  if (!('IntersectionObserver' in window)) {
+    liquidSections.forEach((section) => section.classList.add('is-flowing'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const section = entry.target;
+      if (entry.isIntersecting) {
+        section.classList.remove('is-flowing');
+        void section.offsetWidth;
+        section.classList.add('is-flowing');
+      } else {
+        section.classList.remove('is-flowing');
+      }
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+  liquidSections.forEach((section) => observer.observe(section));
+});
