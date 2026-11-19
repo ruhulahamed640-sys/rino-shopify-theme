@@ -527,12 +527,53 @@
      Collection Sort & Storefront Filters
      ------------------------------------------------------------------------ */
   function initCollectionControls() {
-    const sortSelect = document.querySelector('[data-collection-sort]');
-    if (sortSelect) {
-      sortSelect.addEventListener('change', () => {
-        const url = new URL(window.location.href);
-        url.searchParams.set('sort_by', sortSelect.value);
-        window.location.href = url.toString();
+    const sortControl = document.querySelector('[data-sort-control]');
+    if (sortControl) {
+      const trigger = sortControl.querySelector('[data-sort-trigger]');
+      const menu = sortControl.querySelector('[data-sort-menu]');
+      const options = sortControl.querySelectorAll('[data-sort-value]');
+
+      const closeSortMenu = () => {
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      };
+
+      trigger.addEventListener('click', () => {
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+        menu.hidden = isOpen;
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      options.forEach((option) => {
+        option.addEventListener('click', () => {
+          const url = new URL(window.location.href);
+          url.searchParams.set('sort_by', option.dataset.sortValue);
+          url.searchParams.delete('page');
+          window.location.href = url.toString();
+        });
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!sortControl.contains(event.target)) closeSortMenu();
+      });
+
+      sortControl.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeSortMenu();
+          trigger.focus();
+        }
+        if (event.key === 'ArrowDown' && trigger.getAttribute('aria-expanded') === 'true') {
+          event.preventDefault();
+          options[0]?.focus();
+        }
+        if (event.key === 'ArrowDown' && event.target.matches('[data-sort-value]')) {
+          event.preventDefault();
+          (event.target.nextElementSibling || options[0])?.focus();
+        }
+        if (event.key === 'ArrowUp' && event.target.matches('[data-sort-value]')) {
+          event.preventDefault();
+          (event.target.previousElementSibling || options[options.length - 1])?.focus();
+        }
       });
     }
 
