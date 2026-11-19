@@ -2078,3 +2078,25 @@ p:last-child {
   .rino-filter-checkbox,
   .rino-filter-group summary svg { transition: none; }
 }
+
+
+/* RINO hero product / offer carousel */
+.rino-promo-slider{position:relative;z-index:3;width:min(100%,560px);margin:0 0 clamp(1.25rem,3vw,2rem);overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:18px;background:rgba(12,12,12,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-align:left}
+.rino-promo-slider__track{position:relative}
+.rino-promo-slide{display:none;grid-template-columns:minmax(92px,34%) minmax(0,1fr);min-height:112px;align-items:stretch}
+.rino-promo-slide.is-active{display:grid;animation:rino-promo-in .42s ease both}
+.rino-promo-slide__image{min-height:112px;overflow:hidden;background:#1b1b1b}
+.rino-promo-slide__image img{width:100%;height:100%;min-height:112px;object-fit:cover}
+.rino-promo-slide__content{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;padding:12px 14px}
+.rino-promo-slide__kicker{color:var(--rino-accent,#ff5a1f);font-family:var(--rino-font-display,'Oswald',sans-serif);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.rino-promo-slide__heading{font-size:clamp(1rem,2vw,1.3rem);line-height:1.08}
+.rino-promo-slide__content p{margin:0;color:var(--rino-text-secondary,#a5a19a);font-size:.78rem;line-height:1.4}
+.rino-promo-slide__link{display:inline-flex;align-items:center;gap:8px;margin-top:3px;color:var(--rino-accent,#ff5a1f);font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.rino-promo-slider__controls{position:absolute;right:12px;bottom:9px;display:flex;align-items:center;gap:10px}
+.rino-promo-slider__dots{display:flex;align-items:center;gap:5px}
+.rino-promo-slider__dot{width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.4);transition:width .2s ease,background .2s ease}
+.rino-promo-slider__dot.is-active{width:18px;background:var(--rino-accent,#ff5a1f)}
+.rino-promo-slider__counter{color:rgba(255,255,255,.65);font-size:.62rem;font-variant-numeric:tabular-nums}
+@keyframes rino-promo-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:749px){.rino-promo-slider{width:100%;margin:0 0 1.1rem;border-radius:14px}.rino-promo-slide{grid-template-columns:31% minmax(0,1fr);min-height:100px}.rino-promo-slide__image,.rino-promo-slide__image img{min-height:100px}.rino-promo-slide__content{padding:10px 11px 22px;gap:4px}.rino-promo-slide__heading{font-size:1rem}.rino-promo-slide__content p{font-size:.7rem}.rino-promo-slide__kicker{font-size:.6rem}.rino-promo-slider__controls{right:10px;bottom:7px}}
+@media(prefers-reduced-motion:reduce){.rino-promo-slide.is-active{animation:none}.rino-promo-slider__dot{transition:none}}
