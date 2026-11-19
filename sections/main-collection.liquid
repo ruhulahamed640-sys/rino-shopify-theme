@@ -56,6 +56,15 @@
             </div>
           </div>
         {%- endif -%}
+        <div class="rino-product-view-toggle" role="group" aria-label="Product display layout">
+          <button type="button" class="rino-view-btn is-active" data-product-view="grid" aria-pressed="true" aria-label="Grid view">
+            {% render 'icon', name: 'grid-2x2', size: 18 %}
+          </button>
+          <button type="button" class="rino-view-btn" data-product-view="list" aria-pressed="false" aria-label="List view">
+            {% render 'icon', name: 'list', size: 18 %}
+          </button>
+        </div>
+
       </div>
 
       {%- liquid
@@ -175,7 +184,7 @@
 
         <div>
           {%- if collection.products.size > 0 -%}
-            <div class="rino-product-grid" style="--grid-cols-desktop: {{ section.settings.columns_desktop }};">
+            <div class="rino-product-grid" data-product-grid style="--grid-cols-desktop: {{ section.settings.columns_desktop }};">
               {%- for product in collection.products -%}
                 {%- assign eager_first = true -%}
                 {%- if forloop.index <= 4 -%}{%- assign eager_first = false -%}{%- endif -%}
