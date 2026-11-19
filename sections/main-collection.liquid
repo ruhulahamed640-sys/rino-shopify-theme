@@ -59,13 +59,15 @@
                 <span aria-hidden="true">&times;</span>
               </a>
             {%- endfor -%}
-            {%- if filter.type == 'price_range' and filter.min_value.value != nil or filter.max_value.value != nil -%}
-              <a href="{{ filter.url_to_remove }}" class="rino-filter-chip">
-                <span>
-                  {{ filter.min_value.value | default: 0 | money }} &ndash; {{ filter.max_value.value | default: filter.range_max | money }}
-                </span>
-                <span aria-hidden="true">&times;</span>
-              </a>
+            {%- if filter.type == 'price_range' -%}
+              {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                <a href="{{ filter.url_to_remove }}" class="rino-filter-chip">
+                  <span>
+                    {{ filter.min_value.value | default: 0 | money }} &ndash; {{ filter.max_value.value | default: filter.range_max | money }}
+                  </span>
+                  <span aria-hidden="true">&times;</span>
+                </a>
+              {%- endif -%}
             {%- endif -%}
           {%- endfor -%}
           <a href="{{ collection.url }}" class="rino-filter-chip">
