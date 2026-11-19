@@ -729,6 +729,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     initRinoGlobalExperience();
     initRinoHeroInteractions();
+    initRinoHeaderScrollState();
     initRinoPromoSliders();
     initProductPage();
     initRecentlyViewed();
