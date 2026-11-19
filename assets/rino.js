@@ -626,7 +626,88 @@
     });
   }
 
+
+  function initRinoGlobalExperience() {
+    const root = document.documentElement;
+    const progress = document.querySelector('[data-rino-scroll-progress]');
+    const backToTop = document.querySelector('[data-rino-back-to-top]');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let ticking = false;
+
+    const updateScrollUI = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const percent = scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) : 0;
+      if (progress) progress.style.width = percent + '%';
+      if (backToTop) {
+        const visible = window.scrollY > 480;
+        backToTop.hidden = !visible;
+        backToTop.classList.toggle('is-visible', visible);
+      }
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollUI);
+        ticking = true;
+      }
+    }, { passive: true });
+    window.addEventListener('resize', updateScrollUI);
+    updateScrollUI();
+    if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' }));
+
+    const revealTargets = document.querySelectorAll('.rino-section, .rino-hero, .rino-promo-banner, .rino-product-card, .rino-pdp__gallery, .rino-pdp__info, .rino-cart-summary, .rino-collection-header');
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      root.dataset.rinoMotionReady = 'true';
+      const observer = new IntersectionObserver((entries, instance) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in-view');
+            instance.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+      revealTargets.forEach((element, index) => {
+        element.setAttribute('data-rino-reveal', '');
+        if (element.classList.contains('rino-product-card')) {
+          element.style.setProperty('--rino-reveal-delay', (index % 4) * 75 + 'ms');
+        }
+        observer.observe(element);
+      });
+    } else {
+      revealTargets.forEach((element) => element.classList.add('is-in-view'));
+    }
+
+    document.addEventListener('submit', async (event) => {
+      const form = event.target.closest('[data-rino-quick-add]');
+      if (!form || RINO.cartType !== 'drawer') return;
+      event.preventDefault();
+      const button = form.querySelector('button[type="submit"]');
+      const label = button?.querySelector('span');
+      if (button) button.disabled = true;
+      if (label) label.textContent = 'ADDING...';
+      try {
+        const response = await fetch((RINO.routes?.cart_add_url || '/cart/add') + '.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form)
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.description || result.message || 'Unable to add this item.');
+        await refreshCartDrawer();
+        if (cartDrawer) cartDrawer.open();
+        announce('Added to bag.');
+      } catch (error) {
+        announce(error.message || 'Unable to add this item.');
+        if (label) label.textContent = 'TRY AGAIN';
+      } finally {
+        if (button) button.disabled = false;
+        if (label && label.textContent === 'ADDING...') label.textContent = 'QUICK ADD';
+      }
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    initRinoGlobalExperience();
     initRinoPromoSliders();
     initProductPage();
     initRecentlyViewed();
