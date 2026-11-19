@@ -96,6 +96,7 @@
   </head>
 
   <body class="rino-body template-{{ template.name | handle }}">
+    <div class="rino-scroll-progress" data-rino-scroll-progress aria-hidden="true"></div>
     <a class="skip-to-content-link" href="#MainContent">
       {{ 'general.accessibility.skip_to_content' | t }}
     </a>
@@ -113,5 +114,8 @@
     {%- endif -%}
 
     <div id="RinoLiveRegion" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+    <button class="rino-back-to-top" type="button" data-rino-back-to-top aria-label="Back to top" hidden>
+      <span aria-hidden="true">↑</span>
+    </button>
   </body>
 </html>
