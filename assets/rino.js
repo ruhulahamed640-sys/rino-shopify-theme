@@ -728,9 +728,32 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     initRinoGlobalExperience();
+    initRinoHeroInteractions();
     initRinoPromoSliders();
     initProductPage();
     initRecentlyViewed();
     initCollectionControls();
   });
 })();
+
+
+/* RINO hero pointer spotlight and text entrance */
+function initRinoHeroInteractions(){
+  document.querySelectorAll('.rino-hero__frame').forEach((frame)=>{
+    const content=frame.querySelector('.rino-hero__content');
+    if(content){
+      if('IntersectionObserver' in window){
+        const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){content.classList.add('is-hero-revealed');observer.disconnect();}});},{threshold:.18});
+        observer.observe(content);
+      }else{content.classList.add('is-hero-revealed');}
+    }
+    if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+    frame.addEventListener('pointermove',(event)=>{
+      const rect=frame.getBoundingClientRect();
+      frame.style.setProperty('--hero-pointer-x',((event.clientX-rect.left)/rect.width*100)+'%');
+      frame.style.setProperty('--hero-pointer-y',((event.clientY-rect.top)/rect.height*100)+'%');
+      frame.classList.add('is-pointer-active');
+    });
+    frame.addEventListener('pointerleave',()=>frame.classList.remove('is-pointer-active'));
+  });
+}
