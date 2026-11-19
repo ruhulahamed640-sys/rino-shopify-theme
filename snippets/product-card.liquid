@@ -30,7 +30,7 @@
             widths: '360, 540, 720, 900',
             sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw',
             class: 'rino-product-card__img rino-product-card__img--primary',
-            alt: primary_image.alt | default: card_product.title | escape
+            alt: card_product.title
         }}
         {%- if secondary_image != blank -%}
           {{
@@ -41,7 +41,7 @@
               widths: '360, 540, 720, 900',
               sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw',
               class: 'rino-product-card__img rino-product-card__img--secondary',
-              alt: secondary_image.alt | default: card_product.title | escape
+              alt: card_product.title
           }}
         {%- endif -%}
       {%- else -%}
