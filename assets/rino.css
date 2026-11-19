@@ -2750,3 +2750,81 @@ html[data-rino-motion-ready="true"] .rino-product-card[data-rino-reveal].is-in-v
  .rino-liquid-flow__surface,.rino-liquid-flow__wave,.rino-liquid-flow__drip,.rino-liquid-flow__drop,.rino-liquid-flow__shine{animation:none!important}
  .rino-liquid-flow__drip{transform:scaleY(.9)}
 }
+
+
+/* Scroll-triggered liquid pour: idle state is a slim orange edge */
+.rino-liquid-flow{background:#111;overflow:hidden}
+.rino-liquid-flow__canvas{filter:none}
+.rino-liquid-flow__surface{
+  top:-48px!important;
+  height:54px!important;
+  border-radius:0 0 50% 50% / 0 0 45% 45%;
+  transform:translateY(0);
+  animation:none!important;
+  box-shadow:0 4px 14px rgba(255,90,31,.18),inset 0 -5px 10px rgba(160,35,0,.2);
+}
+.rino-liquid-flow__wave{
+  top:-18px!important;
+  height:42px!important;
+  opacity:0;
+  transform:translateY(-18px) scaleY(.45);
+  animation:none!important;
+}
+.rino-liquid-flow__wave--two{top:-12px!important}
+.rino-liquid-flow__drip{
+  top:7px!important;
+  height:var(--drip-height)!important;
+  transform:scaleY(0);
+  transform-origin:top center;
+  opacity:.98;
+  animation:none!important;
+  border-radius:0 0 50% 50% / 0 0 18% 18%;
+}
+.rino-liquid-flow__drip::after{opacity:0}
+.rino-liquid-flow__drop{
+  top:28px!important;
+  opacity:0;
+  transform:translateY(0) scale(.3) rotate(45deg);
+  animation:none!important;
+}
+.rino-liquid-flow__shine{opacity:0;animation:none!important}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__wave--one{
+  opacity:1;animation:rino-pour-wave 1.25s cubic-bezier(.2,.7,.25,1) both;
+}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__wave--two{
+  opacity:.75;animation:rino-pour-wave 1.5s .12s cubic-bezier(.2,.7,.25,1) both;
+}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drip--one{animation:rino-pour-drip 1.7s .08s cubic-bezier(.2,.7,.25,1) both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drip--two{animation:rino-pour-drip 2s .22s cubic-bezier(.2,.7,.25,1) both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drip--three{animation:rino-pour-drip 1.75s .38s cubic-bezier(.2,.7,.25,1) both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drip--four{animation:rino-pour-drip 2.15s .16s cubic-bezier(.2,.7,.25,1) both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drip--five{animation:rino-pour-drip 1.55s .48s cubic-bezier(.2,.7,.25,1) both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drop--one{animation:rino-pour-drop 1.25s .95s ease-in both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drop--two{animation:rino-pour-drop 1.4s 1.12s ease-in both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__drop--three{animation:rino-pour-drop 1.2s 1.3s ease-in both}
+.rino-liquid-flow.is-flowing .rino-liquid-flow__shine{animation:rino-liquid-shine 1.8s .15s ease-in-out both}
+@keyframes rino-pour-wave{
+  0%{opacity:0;transform:translateY(-20px) scaleY(.35)}
+  35%{opacity:1;transform:translateY(0) scaleY(1.2)}
+  100%{opacity:.82;transform:translateY(7px) scaleY(.7)}
+}
+@keyframes rino-pour-drip{
+  0%{transform:scaleY(0);border-radius:0 0 50% 50% / 0 0 20% 20%}
+  55%{transform:scaleY(1.06);border-radius:0 0 45% 45% / 0 0 12% 12%}
+  78%{transform:scaleY(.94)}
+  100%{transform:scaleY(1)}
+}
+@keyframes rino-pour-drop{
+  0%{opacity:0;transform:translateY(0) scale(.25) rotate(45deg)}
+  18%{opacity:1}
+  100%{opacity:0;transform:translateY(145px) scale(.7) rotate(45deg)}
+}
+@media(max-width:749px){
+  .rino-liquid-flow__surface{top:-48px!important;height:50px!important}
+  .rino-liquid-flow__wave{top:-16px!important;height:38px!important}
+  .rino-liquid-flow__drip{top:4px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .rino-liquid-flow__wave,.rino-liquid-flow__drip,.rino-liquid-flow__drop,.rino-liquid-flow__shine{animation:none!important}
+  .rino-liquid-flow__drip{transform:scaleY(.35)}
+}
