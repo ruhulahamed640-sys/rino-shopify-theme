@@ -20,18 +20,40 @@
         </p>
 
         {%- if section.settings.enable_sorting -%}
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <label for="CollectionSortBy" class="rino-label" style="margin: 0; white-space: nowrap;">
-              {{ 'collections.general.sort_by' | t }}
-            </label>
-            <select id="CollectionSortBy" class="rino-select" data-collection-sort style="width: auto; min-width: 190px;">
-              {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+          <div class="rino-sort-control" data-sort-control>
+            <span class="rino-sort-control__label">{{ 'collections.general.sort_by' | t }}</span>
+            <button
+              type="button"
+              class="rino-sort-trigger"
+              data-sort-trigger
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-controls="RinoSortOptions"
+            >
+              <span data-sort-current>
+                {%- for option in collection.sort_options -%}
+                  {%- if option.value == sort_by -%}{{ option.name | escape }}{%- endif -%}
+                {%- endfor -%}
+              </span>
+              {% render 'icon', name: 'chevron-down', size: 16 %}
+            </button>
+            <div class="rino-sort-menu" id="RinoSortOptions" data-sort-menu role="listbox" aria-label="{{ 'collections.general.sort_by' | t }}" hidden>
               {%- for option in collection.sort_options -%}
-                <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected="selected"{% endif %}>
-                  {{ option.name | escape }}
-                </option>
+                <button
+                  type="button"
+                  class="rino-sort-option{% if option.value == sort_by %} is-selected{% endif %}"
+                  data-sort-value="{{ option.value | escape }}"
+                  role="option"
+                  aria-selected="{% if option.value == sort_by %}true{% else %}false{% endif %}"
+                >
+                  <span>{{ option.name | escape }}</span>
+                  {%- if option.value == sort_by -%}
+                    <span class="rino-sort-option__check" aria-hidden="true">✓</span>
+                  {%- endif -%}
+                </button>
               {%- endfor -%}
-            </select>
+            </div>
           </div>
         {%- endif -%}
       </div>
