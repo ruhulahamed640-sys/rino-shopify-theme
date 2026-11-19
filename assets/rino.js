@@ -783,25 +783,51 @@ function initRinoHeroInteractions(){
 }
 
 
-/* Replay the liquid pour only when the section enters the viewport */
-document.addEventListener('DOMContentLoaded', () => {
-  const liquidSections = document.querySelectorAll('[data-rino-liquid-flow]');
-  if (!liquidSections.length) return;
-  if (!('IntersectionObserver' in window)) {
-    liquidSections.forEach((section) => section.classList.add('is-flowing'));
-    return;
-  }
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      const section = entry.target;
-      if (entry.isIntersecting) {
-        section.classList.remove('is-flowing');
-        void section.offsetWidth;
+/* Scroll-triggered liquid pour — works on storefront and Shopify Theme Editor reloads */
+(function initRinoLiquidFlow(){
+  const observed = new WeakSet();
+
+  function observeLiquidSections(root) {
+    const scope = root && root.querySelectorAll ? root : document;
+    const sections = [];
+    if (scope.matches && scope.matches('[data-rino-liquid-flow]')) sections.push(scope);
+    scope.querySelectorAll('[data-rino-liquid-flow]').forEach((section) => sections.push(section));
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      if (observed.has(section)) return;
+      observed.add(section);
+
+      if (!('IntersectionObserver' in window)) {
         section.classList.add('is-flowing');
-      } else {
-        section.classList.remove('is-flowing');
+        return;
       }
+
+      let wasVisible = false;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !wasVisible) {
+            wasVisible = true;
+            section.classList.remove('is-flowing');
+            void section.offsetWidth;
+            section.classList.add('is-flowing');
+          } else if (!entry.isIntersecting && wasVisible) {
+            wasVisible = false;
+            section.classList.remove('is-flowing');
+          }
+        });
+      }, { threshold: 0.01, rootMargin: '0px 0px 22% 0px' });
+
+      observer.observe(section);
     });
-  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
-  liquidSections.forEach((section) => observer.observe(section));
-});
+  }
+
+  function boot() { observeLiquidSections(document); }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot, { once: true });
+  } else {
+    boot();
+  }
+  document.addEventListener('shopify:section:load', (event) => observeLiquidSections(event.target));
+  document.addEventListener('shopify:section:reorder', boot);
+})();
