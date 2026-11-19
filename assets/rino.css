@@ -2126,3 +2126,103 @@ html[data-rino-motion-ready="true"] .rino-product-card[data-rino-reveal].is-in-v
 .rino-header__link::after{transition:transform .25s ease}
 @media(max-width:749px){.rino-back-to-top{right:14px;bottom:14px;width:42px;height:42px}.rino-quick-add{min-height:40px;font-size:.72rem}}
 @media(prefers-reduced-motion:reduce){html[data-rino-motion-ready="true"] [data-rino-reveal],html[data-rino-motion-ready="true"] [data-rino-reveal].is-in-view{opacity:1;transform:none;transition:none}.rino-product-card,.rino-product-card__media img,.rino-quick-add,.rino-back-to-top,.rino-btn{transition:none!important;animation:none!important}}
+
+
+/* RINO mobile hero layout correction */
+@media (max-width: 749px) {
+  .rino-hero__frame {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-height: 0;
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .rino-hero__content {
+    order: 1;
+    width: 100%;
+    max-width: none;
+    flex: 0 0 auto;
+    padding: 1.25rem 0 .5rem;
+    text-align: left;
+  }
+
+  .rino-hero__content .rino-heading-xl {
+    max-width: 12ch;
+    font-size: clamp(2.65rem, 12vw, 4rem);
+    line-height: .91;
+    overflow-wrap: anywhere;
+  }
+
+  .rino-hero__subtitle {
+    max-width: 38ch;
+    margin-top: .9rem;
+    font-size: .98rem;
+    line-height: 1.55;
+  }
+
+  .rino-hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .65rem;
+    margin-top: 1.2rem;
+  }
+
+  .rino-hero__actions .rino-btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .rino-promo-slider {
+    order: 2;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .rino-hero__media,
+  .rino-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .rino-hero__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,.30) 0%,
+      rgba(0,0,0,.58) 48%,
+      rgba(0,0,0,.86) 100%
+    );
+  }
+}
+
+@media (max-width: 380px) {
+  .rino-hero__frame {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .rino-hero__content {
+    padding-top: .9rem;
+  }
+
+  .rino-hero__content .rino-heading-xl {
+    font-size: clamp(2.35rem, 11.5vw, 2.85rem);
+  }
+
+  .rino-hero__subtitle {
+    font-size: .9rem;
+  }
+
+  .rino-promo-slide {
+    grid-template-columns: 29% minmax(0, 1fr);
+  }
+
+  .rino-promo-slide__content {
+    padding: 9px 10px 22px;
+  }
+}
