@@ -58,18 +58,6 @@
 
       <div class="rino-header__actions">
         <a href="{{ routes.all_products_collection_url }}" class="rino-header__shop-cta">SHOP NOW</a>
-        {%- if section.settings.show_search -%}
-          <button
-            type="button"
-            class="rino-icon-btn"
-            data-search-open
-            aria-label="{{ 'general.accessibility.search' | t }}"
-            aria-controls="RinoSearchModal"
-          >
-            {% render 'icon', name: 'search', size: 20 %}
-          </button>
-        {%- endif -%}
-
         {%- if shop.customer_accounts_enabled and section.settings.show_account -%}
           <a
             href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
