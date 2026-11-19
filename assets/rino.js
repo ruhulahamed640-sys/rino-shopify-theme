@@ -434,8 +434,19 @@
             errorEl.hidden = false;
           }
         } finally {
-          if (submitBtn) submitBtn.disabled = false;
-          if (submitText) submitText.textContent = RINO.strings?.addToCart || 'Add to Bag';
+          const selectedVariant = variants.find(
+            (variant) => String(variant.id) === String(variantInput?.value)
+          );
+          const canAddToCart = Boolean(selectedVariant && selectedVariant.available);
+
+          if (submitBtn) submitBtn.disabled = !canAddToCart;
+          if (submitText) {
+            submitText.textContent = canAddToCart
+              ? (RINO.strings?.addToCart || 'Add to Bag')
+              : (selectedVariant
+                ? (RINO.strings?.soldOut || 'Sold Out')
+                : (RINO.strings?.unavailable || 'Unavailable'));
+          }
         }
       });
     }
