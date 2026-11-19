@@ -65,5 +65,20 @@
       <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
     </h3>
     {% render 'price', product: card_product, use_variant: false, show_badges: false %}
+    <div class="rino-product-card__actions">
+      {%- if card_product.available and card_product.has_only_default_variant -%}
+        <form method="post" action="{{ routes.cart_add_url }}" class="rino-quick-add-form" data-rino-quick-add>
+          <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="rino-quick-add">
+            <span>QUICK ADD</span><span aria-hidden="true">+</span>
+          </button>
+        </form>
+      {%- elsif card_product.available -%}
+        <a href="{{ card_product.url }}" class="rino-quick-add rino-quick-add--link">CHOOSE OPTIONS <span aria-hidden="true">→</span></a>
+      {%- else -%}
+        <span class="rino-quick-add rino-quick-add--disabled">SOLD OUT</span>
+      {%- endif -%}
+    </div>
   </div>
 </article>
