@@ -70,6 +70,14 @@
       <path d="M7 12H17"></path>
       <path d="M10 18H14"></path>
     </svg>
+  {%- when 'grid-2x2' -%}
+    <svg class="rino-icon rino-icon--grid" width="{{ icon_size }}" height="{{ icon_size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <rect x="3.5" y="3.5" width="7" height="7" rx="1"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1"></rect>
+    </svg>
+  {%- when 'list' -%}
+    <svg class="rino-icon rino-icon--list" width="{{ icon_size }}" height="{{ icon_size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M9 6H20"></path><path d="M9 12H20"></path><path d="M9 18H20"></path><path d="M4 6H4.01"></path><path d="M4 12H4.01"></path><path d="M4 18H4.01"></path>
+    </svg>
   {%- when 'play' -%}
     <svg class="rino-icon rino-icon--play" width="{{ icon_size }}" height="{{ icon_size }}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
       <path d="M8 5.5L19 12L8 18.5V5.5Z"></path>
