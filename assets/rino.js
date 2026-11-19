@@ -587,7 +587,47 @@
     }
   }
 
+  function initRinoPromoSliders() {
+    document.querySelectorAll('[data-rino-promo-slider]').forEach((slider) => {
+      const slides = Array.from(slider.querySelectorAll('[data-rino-promo-slide]'));
+      const dots = Array.from(slider.querySelectorAll('[data-rino-promo-dot]'));
+      const current = slider.querySelector('[data-rino-promo-current]');
+      if (slides.length < 2) return;
+      let active = 0;
+      let timer = null;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const show = (index) => {
+        active = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          const selected = i === active;
+          slide.classList.toggle('is-active', selected);
+          slide.setAttribute('aria-hidden', String(!selected));
+        });
+        dots.forEach((dot, i) => {
+          const selected = i === active;
+          dot.classList.toggle('is-active', selected);
+          dot.setAttribute('aria-pressed', String(selected));
+        });
+        if (current) current.textContent = String(active + 1).padStart(2, '0');
+      };
+      const stop = () => { if (timer) window.clearInterval(timer); timer = null; };
+      const start = () => {
+        stop();
+        if (!reducedMotion && !document.hidden) timer = window.setInterval(() => show(active + 1), 3000);
+      };
+      dots.forEach((dot) => dot.addEventListener('click', () => { show(Number(dot.dataset.rinoPromoDot)); start(); }));
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('mouseleave', start);
+      slider.addEventListener('focusin', stop);
+      slider.addEventListener('focusout', (event) => { if (!slider.contains(event.relatedTarget)) start(); });
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+      show(0);
+      start();
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    initRinoPromoSliders();
     initProductPage();
     initRecentlyViewed();
     initCollectionControls();
