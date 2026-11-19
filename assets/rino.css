@@ -2420,3 +2420,83 @@ html[data-rino-motion-ready="true"] .rino-product-card[data-rino-reveal].is-in-v
     background: transparent !important;
   }
 }
+
+
+/* Final mobile composition: transparent header overlays the hero image */
+@media (max-width: 749px) {
+  .rino-header-wrapper,
+  .rino-header-wrapper.is-sticky {
+    position: relative !important;
+    top: auto !important;
+    z-index: 60 !important;
+    margin-bottom: -70px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .rino-header-wrapper .rino-container,
+  .rino-header-wrapper .rino-header {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+  .rino-header {
+    min-height: 70px;
+  }
+
+  /* Keep the actual uploaded hero image visible on mobile */
+  .rino-hero__frame {
+    min-height: var(--hero-min-height-mobile, 540px) !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    background: #090909;
+  }
+  .rino-hero__media {
+    opacity: 1 !important;
+    z-index: 0 !important;
+  }
+  .rino-hero__media picture,
+  .rino-hero__media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: var(--hero-pos, center center) !important;
+  }
+  .rino-hero__overlay {
+    z-index: 1 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,.16) 0%,
+      rgba(0,0,0,.24) 35%,
+      rgba(0,0,0,.62) 72%,
+      rgba(0,0,0,.82) 100%
+    ) !important;
+  }
+  .rino-hero__content {
+    align-self: stretch;
+    position: relative !important;
+    z-index: 3 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 6.1rem 1.1rem 1.5rem !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    text-align: left !important;
+  }
+  .rino-hero__content .rino-heading-xl {
+    color: #fff !important;
+    text-shadow: 0 3px 18px rgba(0,0,0,.7);
+  }
+  .rino-hero__subtitle {
+    color: #fff !important;
+    text-shadow: 0 2px 12px rgba(0,0,0,.9);
+  }
+  .rino-hero__actions {
+    position: relative;
+    z-index: 4;
+  }
+}
