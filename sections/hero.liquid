@@ -36,39 +36,7 @@
         {%- endif -%}
       </div>
 
-      {%- if section.blocks.size > 0 -%}
-        <div class="rino-promo-slider rino-promo-slider--hero" data-rino-promo-slider aria-label="New products and offers">
-          <div class="rino-promo-slider__track">
-            {%- for block in section.blocks -%}
-              {%- assign promo_product = block.settings.product -%}
-              {%- assign promo_image = block.settings.image | default: promo_product.featured_image -%}
-              {%- assign promo_heading = block.settings.heading | default: promo_product.title -%}
-              {%- assign promo_link = block.settings.link | default: promo_product.url -%}
-              <article class="rino-promo-slide{% if forloop.first %} is-active{% endif %}" data-rino-promo-slide aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}" {{ block.shopify_attributes }}>
-                {%- if promo_image != blank -%}
-                  <div class="rino-promo-slide__image">{{ promo_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(max-width: 749px) 88vw, 520px', alt: promo_heading }}</div>
-                {%- else -%}
-                  <div class="rino-promo-slide__image rino-promo-slide__image--placeholder" aria-hidden="true">{{ 'product-1' | placeholder_svg_tag }}</div>
-                {%- endif -%}
-                <div class="rino-promo-slide__content">
-                  {%- if block.settings.kicker != blank -%}<span class="rino-promo-slide__kicker">{{ block.settings.kicker | escape }}</span>{%- endif -%}
-                  {%- if promo_heading != blank -%}<h2 class="rino-promo-slide__heading">{{ promo_heading | escape }}</h2>{%- endif -%}
-                  {%- if block.settings.description != blank -%}<p>{{ block.settings.description | escape }}</p>{%- endif -%}
-                  {%- if block.settings.button_label != blank and promo_link != blank -%}<a class="rino-promo-slide__link" href="{{ promo_link }}">{{ block.settings.button_label | escape }} <span aria-hidden="true">→</span></a>{%- endif -%}
-                </div>
-              </article>
-            {%- endfor -%}
-          </div>
-          {%- if section.blocks.size > 1 -%}
-            <div class="rino-promo-slider__controls">
-              <div class="rino-promo-slider__dots" role="group" aria-label="Choose promotion">
-                {%- for block in section.blocks -%}<button type="button" class="rino-promo-slider__dot{% if forloop.first %} is-active{% endif %}" data-rino-promo-dot="{{ forloop.index0 }}" aria-label="Show slide {{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"></button>{%- endfor -%}
-              </div>
-              <span class="rino-promo-slider__counter"><span data-rino-promo-current>01</span> / {{ section.blocks.size | prepend: '0' | slice: -2, 2 }}</span>
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+
 
       <div class="rino-hero__overlay" aria-hidden="true"></div>
 
@@ -240,53 +208,6 @@
   "presets": [
     {
       "name": "Hero"
-    }
-  ],
-  "max_blocks": 6,
-  "blocks": [
-    {
-      "type": "promo_slide",
-      "name": "Product / offer slide",
-      "settings": [
-        {
-          "type": "text",
-          "id": "kicker",
-          "label": "Label",
-          "default": "NEW DROP"
-        },
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Product (optional)"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Slide image"
-        },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "NEW SEASON. NEW ENERGY."
-        },
-        {
-          "type": "textarea",
-          "id": "description",
-          "label": "Description"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button label",
-          "default": "SHOP NOW"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Button link"
-        }
-      ]
     }
   ]
 }
