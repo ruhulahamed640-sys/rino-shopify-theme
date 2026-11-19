@@ -2347,3 +2347,24 @@ html[data-rino-motion-ready="true"] .rino-product-card[data-rino-reveal].is-in-v
 @media(prefers-reduced-motion:reduce){
   .rino-mobile-nav,.rino-mobile-nav *{transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
+
+
+/* RINO hero interaction layer — cursor spotlight and editorial typography */
+.rino-hero__frame{isolation:isolate;--hero-pointer-x:50%;--hero-pointer-y:50%}
+.rino-hero__media img,.rino-hero__media picture{transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .8s ease}
+.rino-hero__frame:hover .rino-hero__media img{transform:scale(1.035);filter:contrast(1.06) saturate(1.08)}
+.rino-hero__frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(440px circle at var(--hero-pointer-x) var(--hero-pointer-y),rgba(255,90,31,.16),transparent 66%);transition:opacity .45s ease}
+.rino-hero__frame.is-pointer-active::after{opacity:1}
+.rino-hero__content{z-index:2}
+.rino-hero__content .rino-eyebrow,.rino-hero__content .rino-heading-xl,.rino-hero__content .rino-hero__subtitle,.rino-hero__content .rino-hero__actions{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.rino-hero__content.is-hero-revealed .rino-eyebrow{opacity:1;transform:translateY(0);transition-delay:.08s}
+.rino-hero__content.is-hero-revealed .rino-heading-xl{opacity:1;transform:translateY(0);transition-delay:.18s}
+.rino-hero__content.is-hero-revealed .rino-hero__subtitle{opacity:1;transform:translateY(0);transition-delay:.32s}
+.rino-hero__content.is-hero-revealed .rino-hero__actions{opacity:1;transform:translateY(0);transition-delay:.44s}
+.rino-hero__content .rino-heading-xl{position:relative;text-wrap:balance;text-shadow:0 8px 32px rgba(0,0,0,.22)}
+.rino-hero__content .rino-heading-xl::after{content:"";display:block;width:clamp(54px,8vw,108px);height:4px;margin-top:clamp(14px,2vw,22px);background:var(--rino-accent,#ff5a1f);transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.2,.7,.2,1) .52s}
+.rino-hero__content.is-hero-revealed .rino-heading-xl::after{transform:scaleX(1)}
+.rino-hero__actions .rino-btn{transition:transform .28s ease,box-shadow .28s ease,background .28s ease}
+.rino-hero__actions .rino-btn:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(255,90,31,.18)}
+@media(max-width:749px){.rino-hero__content .rino-heading-xl{font-size:clamp(2.7rem,12vw,4.3rem)}.rino-hero__frame::after{display:none}}
+@media(prefers-reduced-motion:reduce){.rino-hero__media img,.rino-hero__content *,.rino-hero__frame::after{transition:none!important;transform:none!important;animation:none!important}.rino-hero__content .rino-eyebrow,.rino-hero__content .rino-heading-xl,.rino-hero__content .rino-hero__subtitle,.rino-hero__content .rino-hero__actions{opacity:1}}
