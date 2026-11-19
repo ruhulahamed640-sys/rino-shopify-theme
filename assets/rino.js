@@ -597,6 +597,29 @@
       });
     }
 
+    const productGrid = document.querySelector('[data-product-grid]');
+    const viewButtons = document.querySelectorAll('[data-product-view]');
+    if (productGrid && viewButtons.length) {
+      let savedView = 'grid';
+      try {
+        savedView = window.localStorage.getItem('rino-product-view') || 'grid';
+      } catch (error) {}
+      const setView = (view) => {
+        const nextView = view === 'list' ? 'list' : 'grid';
+        productGrid.classList.toggle('is-list-view', nextView === 'list');
+        viewButtons.forEach((button) => {
+          const active = button.dataset.productView === nextView;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        try {
+          window.localStorage.setItem('rino-product-view', nextView);
+        } catch (error) {}
+      };
+      viewButtons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.productView)));
+      setView(savedView);
+    }
+
     const filterForm = document.querySelector('[data-collection-filter-form]');
     if (filterForm) {
       filterForm.addEventListener('change', (e) => {
