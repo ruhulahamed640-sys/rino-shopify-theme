@@ -1,0 +1,42 @@
+<section
+  class="rino-liquid-flow"
+  aria-label="{{ section.settings.accessible_label | escape }}"
+  style="--liquid-height: {{ section.settings.height }}px; --liquid-speed: {{ section.settings.speed }}s; --liquid-color: {{ section.settings.liquid_color }};"
+  data-rino-liquid-flow
+>
+  <div class="rino-liquid-flow__canvas" aria-hidden="true">
+    <div class="rino-liquid-flow__surface"></div>
+    <div class="rino-liquid-flow__wave rino-liquid-flow__wave--one"></div>
+    <div class="rino-liquid-flow__wave rino-liquid-flow__wave--two"></div>
+    <span class="rino-liquid-flow__drip rino-liquid-flow__drip--one"></span>
+    <span class="rino-liquid-flow__drip rino-liquid-flow__drip--two"></span>
+    <span class="rino-liquid-flow__drip rino-liquid-flow__drip--three"></span>
+    <span class="rino-liquid-flow__drip rino-liquid-flow__drip--four"></span>
+    <span class="rino-liquid-flow__drip rino-liquid-flow__drip--five"></span>
+    <span class="rino-liquid-flow__drop rino-liquid-flow__drop--one"></span>
+    <span class="rino-liquid-flow__drop rino-liquid-flow__drop--two"></span>
+    <span class="rino-liquid-flow__drop rino-liquid-flow__drop--three"></span>
+    <span class="rino-liquid-flow__shine"></span>
+  </div>
+  {%- if section.settings.show_caption -%}
+    <div class="rino-liquid-flow__caption">
+      <span>{{ section.settings.caption | escape }}</span>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "RINO Liquid Flow",
+  "settings": [
+    {"type":"text","id":"accessible_label","label":"Accessible label","default":"Animated orange liquid transition"},
+    {"type":"checkbox","id":"show_caption","label":"Show caption","default":false},
+    {"type":"text","id":"caption","label":"Caption","default":"MADE TO STAND OUT"},
+    {"type":"color","id":"liquid_color","label":"Liquid color","default":"#FF5A1F"},
+    {"type":"range","id":"height","label":"Section height","min":100,"max":360,"step":10,"unit":"px","default":210},
+    {"type":"range","id":"speed","label":"Animation speed","min":4,"max":16,"step":1,"unit":"s","default":9}
+  ],
+  "presets":[{"name":"RINO Liquid Flow"}],
+  "enabled_on":{"templates":["index"]}
+}
+{% endschema %}
