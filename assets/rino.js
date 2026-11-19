@@ -43,24 +43,38 @@
   /* ------------------------------------------------------------------------
      Accessible Drawer / Modal Controller
      ------------------------------------------------------------------------ */
-  function createOverlayController(element, focusSelector) {
+  function createOverlayController(element, focusSelector, animate = false) {
     if (!element) return null;
     let lastFocused = null;
+    let closeTimer = null;
 
     function open() {
+      if (closeTimer) window.clearTimeout(closeTimer);
       lastFocused = document.activeElement;
       element.hidden = false;
+      if (animate) {
+        element.classList.remove('is-closing');
+        window.requestAnimationFrame(() => element.classList.add('is-open'));
+      }
       document.body.classList.add('rino-scroll-locked');
       const target = focusSelector ? element.querySelector(focusSelector) : element.querySelector('[tabindex="-1"], button, input, a');
       if (target) target.focus();
     }
 
     function close() {
-      element.hidden = true;
-      document.body.classList.remove('rino-scroll-locked');
-      if (lastFocused && typeof lastFocused.focus === 'function') {
-        lastFocused.focus();
+      if (animate && !element.hidden) {
+        element.classList.remove('is-open');
+        element.classList.add('is-closing');
+        closeTimer = window.setTimeout(() => {
+          element.hidden = true;
+          element.classList.remove('is-closing');
+          closeTimer = null;
+        }, 480);
+      } else {
+        element.hidden = true;
       }
+      document.body.classList.remove('rino-scroll-locked');
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
     }
 
     element.addEventListener('keydown', (e) => {
@@ -75,7 +89,7 @@
   const searchModalEl = document.getElementById('RinoSearchModal');
 
   const cartDrawer = createOverlayController(cartDrawerEl, '.rino-drawer__panel');
-  const mobileNav = createOverlayController(mobileNavEl, '.rino-mobile-nav__panel button');
+  const mobileNav = createOverlayController(mobileNavEl, '.rino-mobile-nav__panel button', true);
   const searchModal = createOverlayController(searchModalEl, 'input[type="search"]');
 
   document.addEventListener('click', (e) => {
@@ -89,9 +103,15 @@
     if (e.target.closest('[data-mobile-nav-open]') && mobileNav) {
       e.preventDefault();
       mobileNav.open();
+      e.target.closest('[data-mobile-nav-open]')?.setAttribute('aria-expanded', 'true');
     }
     if (e.target.closest('[data-mobile-nav-close]') && mobileNav) {
       mobileNav.close();
+      document.querySelector('[data-mobile-nav-open]')?.setAttribute('aria-expanded', 'false');
+    }
+    if (e.target.closest('#RinoMobileNav a') && mobileNav) {
+      mobileNav.close();
+      document.querySelector('[data-mobile-nav-open]')?.setAttribute('aria-expanded', 'false');
     }
     if (e.target.closest('[data-search-open]') && searchModal) {
       e.preventDefault();
