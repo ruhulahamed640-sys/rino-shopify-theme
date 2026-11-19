@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" fill="none" role="img" aria-label="RINO">
+  <rect x="1" y="1" width="42" height="42" rx="10" fill="#FF5A1F"/>
+  <path d="M13 32V12H23.5C27.5 12 30 14.3 30 17.8C30 20.5 28.5 22.5 26 23.2L30.8 32H25.2L21.1 24H18V32H13ZM18 19.8H22.8C24.3 19.8 25.1 19.1 25.1 17.9C25.1 16.7 24.3 16 22.8 16H18V19.8Z" fill="#000000"/>
+  <text x="56" y="33" fill="#F4F1EB" font-family="Oswald, Impact, Arial Narrow, sans-serif" font-size="32" font-weight="700" letter-spacing="4">RINO</text>
+</svg>

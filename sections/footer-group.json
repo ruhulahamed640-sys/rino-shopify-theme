@@ -1,0 +1,46 @@
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop-links": {
+          "type": "link_list",
+          "settings": {
+            "heading": "SHOP",
+            "menu": "footer"
+          }
+        },
+        "brand-links": {
+          "type": "link_list",
+          "settings": {
+            "heading": "STUDIO",
+            "menu": "footer"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "EARLY ACCESS",
+            "subtext": "Get first access to limited RINO drops and studio editions."
+          }
+        }
+      },
+      "block_order": [
+        "shop-links",
+        "brand-links",
+        "newsletter"
+      ],
+      "settings": {
+        "brand_description": "WEAR YOUR IDENTITY. Heavyweight custom-printed streetwear tees engineered for global street culture.",
+        "show_social": true,
+        "show_payment_icons": true,
+        "show_policy": true
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

@@ -1,0 +1,206 @@
+<header class="rino-header-wrapper{% if section.settings.sticky_header %} is-sticky{% endif %}">
+  <div class="rino-container">
+    <div class="rino-header">
+      <div class="rino-header__left">
+        <button
+          type="button"
+          class="rino-icon-btn rino-header__mobile-toggle"
+          data-mobile-nav-open
+          aria-label="{{ 'general.accessibility.menu' | t }}"
+          aria-controls="RinoMobileNav"
+        >
+          {% render 'icon', name: 'menu', size: 22 %}
+        </button>
+      </div>
+
+      <a href="{{ routes.root_url }}" class="rino-header__logo" aria-label="{{ shop.name | escape }}">
+        {%- if section.settings.logo != blank -%}
+          {{
+            section.settings.logo
+            | image_url: width: 320
+            | image_tag:
+              class: 'rino-header__logo-img',
+              alt: shop.name | escape,
+              loading: 'eager'
+          }}
+        {%- elsif section.settings.show_mark -%}
+          <img
+            src="{{ 'icon-rino-mark.svg' | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            class="rino-header__logo-img"
+            width="140"
+            height="34"
+            loading="eager"
+          >
+        {%- else -%}
+          <span class="rino-header__logo-wordmark">{{ shop.name | escape }}</span>
+        {%- endif -%}
+      </a>
+
+      <nav class="rino-header__nav" aria-label="Main navigation">
+        {%- if section.settings.menu != blank -%}
+          <ul class="rino-header__menu" role="list">
+            {%- for link in section.settings.menu.links -%}
+              <li>
+                <a
+                  href="{{ link.url }}"
+                  class="rino-header__link"
+                  {% if link.current %}aria-current="page"{% endif %}
+                >
+                  {{ link.title | escape }}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </nav>
+
+      <div class="rino-header__actions">
+        {%- if section.settings.show_search -%}
+          <button
+            type="button"
+            class="rino-icon-btn"
+            data-search-open
+            aria-label="{{ 'general.accessibility.search' | t }}"
+            aria-controls="RinoSearchModal"
+          >
+            {% render 'icon', name: 'search', size: 20 %}
+          </button>
+        {%- endif -%}
+
+        {%- if shop.customer_accounts_enabled and section.settings.show_account -%}
+          <a
+            href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+            class="rino-icon-btn"
+            aria-label="{{ 'general.accessibility.account' | t }}"
+          >
+            {% render 'icon', name: 'account', size: 20 %}
+          </a>
+        {%- endif -%}
+
+        <a
+          href="{{ routes.cart_url }}"
+          class="rino-icon-btn"
+          {% if settings.cart_type == 'drawer' %}data-cart-open{% endif %}
+          aria-label="{{ 'general.accessibility.cart' | t }}"
+        >
+          {% render 'icon', name: 'bag', size: 20 %}
+          <span class="rino-cart-badge{% if cart.item_count == 0 %} is-empty{% endif %}" data-cart-count>
+            {{ cart.item_count }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile Navigation Drawer {%- endcomment -%}
+<div id="RinoMobileNav" class="rino-mobile-nav" role="dialog" aria-modal="true" aria-label="{{ 'sections.header.menu' | t }}" hidden>
+  <div class="rino-mobile-nav__overlay" data-mobile-nav-close></div>
+  <div class="rino-mobile-nav__panel">
+    <div class="rino-mobile-nav__header">
+      <span class="rino-header__logo-wordmark">{{ shop.name | escape }}</span>
+      <button type="button" class="rino-icon-btn" data-mobile-nav-close aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'icon', name: 'close', size: 22 %}
+      </button>
+    </div>
+
+    {%- if section.settings.menu != blank -%}
+      <nav aria-label="Mobile navigation">
+        <ul class="rino-mobile-nav__list" role="list">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="rino-mobile-nav__link"
+                {% if link.current %}aria-current="page"{% endif %}
+              >
+                <span>{{ link.title | escape }}</span>
+                {% render 'icon', name: 'arrow-right', size: 18 %}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <div class="rino-mobile-nav__footer">
+      {%- if shop.customer_accounts_enabled and section.settings.show_account -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="rino-btn rino-btn--secondary rino-btn--full">
+          {{ 'general.accessibility.account' | t }}
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.all_products_collection_url }}" class="rino-btn rino-btn--primary rino-btn--full">
+        SHOP THE DROP
+      </a>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Accessible Search Modal {%- endcomment -%}
+{%- if section.settings.show_search -%}
+  <div id="RinoSearchModal" class="rino-search-modal" role="dialog" aria-modal="true" aria-label="{{ 'general.search.title' | t }}" hidden>
+    <div class="rino-search-modal__box">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="rino-search-modal__form">
+        <label for="RinoSearchInput" class="visually-hidden">{{ 'general.search.title' | t }}</label>
+        <input
+          id="RinoSearchInput"
+          type="search"
+          name="q"
+          class="rino-input"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          value="{{ search.terms | escape }}"
+          autocomplete="off"
+        >
+        <input type="hidden" name="type" value="product">
+        <button type="submit" class="rino-btn rino-btn--primary">{{ 'general.search.submit' | t }}</button>
+        <button type="button" class="rino-icon-btn" data-search-close aria-label="{{ 'general.accessibility.close' | t }}">
+          {% render 'icon', name: 'close', size: 20 %}
+        </button>
+      </form>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Custom logo image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mark",
+      "label": "Show RINO SVG wordmark when no image is uploaded",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Desktop & mobile menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Enable sticky header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account link",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_bottom": 28
+      }
+    },
+    "story": {
+      "type": "image-text",
+      "settings": {
+        "layout": "image_right",
+        "eyebrow": "BORN IN THE STREETS",
+        "heading": "WEAR YOUR IDENTITY.",
+        "text": "<p>RINO is an independent streetwear label focused on custom-printed heavyweight tees. We reject fast-fashion noise in favor of sharp graphic storytelling, durable 280GSM combed cotton, and architectural boxy cuts.</p>",
+        "cta_label": "SHOP THE DROP"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "STAY CONNECTED",
+        "heading": "JOIN THE RINO STUDIO LIST."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "story",
+    "newsletter"
+  ]
+}

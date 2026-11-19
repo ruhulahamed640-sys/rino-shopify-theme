@@ -1,0 +1,46 @@
+{%- comment -%}
+  RINO Pagination Snippet
+  Accepts:
+  - paginate: {Object} Shopify Paginate object
+{%- endcomment -%}
+{%- if paginate.parts.size > 0 -%}
+  <nav class="rino-pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+    <ul class="rino-pagination__list" role="list">
+      {%- if paginate.previous -%}
+        <li>
+          <a href="{{ paginate.previous.url }}" class="rino-pagination__item rino-pagination__item--prev" aria-label="{{ 'general.pagination.previous' | t }}">
+            {% render 'icon', name: 'chevron-left', size: 18 %}
+            <span>{{ 'general.pagination.previous' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+
+      {%- for part in paginate.parts -%}
+        <li>
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" class="rino-pagination__item" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+              {{ part.title }}
+            </a>
+          {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+              <span class="rino-pagination__item rino-pagination__item--current" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+                {{ part.title }}
+              </span>
+            {%- else -%}
+              <span class="rino-pagination__item rino-pagination__item--ellipsis">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      {%- if paginate.next -%}
+        <li>
+          <a href="{{ paginate.next.url }}" class="rino-pagination__item rino-pagination__item--next" aria-label="{{ 'general.pagination.next' | t }}">
+            <span>{{ 'general.pagination.next' | t }}</span>
+            {% render 'icon', name: 'chevron-right', size: 18 %}
+          </a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </nav>
+{%- endif -%}

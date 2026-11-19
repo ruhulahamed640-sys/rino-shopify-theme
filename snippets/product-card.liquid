@@ -1,0 +1,69 @@
+{%- comment -%}
+  RINO Product Card Snippet
+  Accepts:
+  - card_product: {Object} Product Liquid object
+  - lazy_load: {Boolean} Image should be lazy loaded (default: true)
+{%- endcomment -%}
+{%- liquid
+  assign img_loading = 'lazy'
+  if lazy_load == false
+    assign img_loading = 'eager'
+  endif
+
+  assign primary_image = card_product.featured_media.preview_image
+  assign secondary_image = card_product.media[1].preview_image
+  assign on_sale = false
+  if card_product.compare_at_price > card_product.price and card_product.available
+    assign on_sale = true
+  endif
+-%}
+
+<article class="rino-product-card">
+  <a href="{{ card_product.url }}" class="rino-product-card__media-link" aria-label="{{ card_product.title | escape }}">
+    <div class="rino-product-card__media{% if secondary_image != blank %} has-hover-image{% endif %}">
+      {%- if primary_image != blank -%}
+        {{
+          primary_image
+          | image_url: width: 900
+          | image_tag:
+            loading: img_loading,
+            widths: '360, 540, 720, 900',
+            sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw',
+            class: 'rino-product-card__img rino-product-card__img--primary',
+            alt: primary_image.alt | default: card_product.title | escape
+        }}
+        {%- if secondary_image != blank -%}
+          {{
+            secondary_image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '360, 540, 720, 900',
+              sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw',
+              class: 'rino-product-card__img rino-product-card__img--secondary',
+              alt: secondary_image.alt | default: card_product.title | escape
+          }}
+        {%- endif -%}
+      {%- else -%}
+        <div class="rino-product-card__placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'rino-placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      <div class="rino-product-card__badges">
+        {%- unless card_product.available -%}
+          <span class="rino-badge rino-badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+        {%- elsif on_sale -%}
+          <span class="rino-badge rino-badge--sale">{{ 'products.product.on_sale' | t }}</span>
+        {%- endunless -%}
+      </div>
+    </div>
+  </a>
+
+  <div class="rino-product-card__info">
+    <h3 class="rino-product-card__title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+    {% render 'price', product: card_product, use_variant: false, show_badges: false %}
+  </div>
+</article>

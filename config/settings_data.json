@@ -1,0 +1,23 @@
+{
+  "current": {
+    "color_bg_primary": "#111111",
+    "color_bg_secondary": "#191919",
+    "color_text_primary": "#F4F1EB",
+    "color_text_secondary": "#A5A19A",
+    "color_accent": "#FF5A1F",
+    "color_border": "#333333",
+    "color_white": "#FFFFFF",
+    "color_black": "#000000",
+    "font_heading": "oswald_n6",
+    "font_body": "dm_sans_n4",
+    "heading_scale": 100,
+    "body_scale": 100,
+    "page_width": 1380,
+    "card_radius": 24,
+    "button_radius": 12,
+    "cart_type": "drawer",
+    "cart_show_note": true,
+    "cart_shipping_notice": "Taxes and international shipping calculated at checkout.",
+    "brand_tagline": "WEAR YOUR IDENTITY."
+  }
+}

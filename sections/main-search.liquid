@@ -1,0 +1,92 @@
+{%- paginate search.results by 16 -%}
+  <section
+    class="rino-section"
+    style="--section-pt: {{ section.settings.padding_top }}px; --section-pb: {{ section.settings.padding_bottom }}px;"
+  >
+    <div class="rino-container">
+      <div class="rino-narrow" style="margin-bottom: 2.5rem;">
+        <span class="rino-eyebrow">RINO ARCHIVE</span>
+        <h1 class="rino-heading-lg">{{ 'general.search.title' | t }}</h1>
+
+        <form action="{{ routes.search_url }}" method="get" role="search" class="rino-search-modal__form" style="margin-top: 1.25rem;">
+          <label for="MainSearchInput" class="visually-hidden">{{ 'general.search.title' | t }}</label>
+          <input
+            id="MainSearchInput"
+            type="search"
+            name="q"
+            class="rino-input"
+            value="{{ search.terms | escape }}"
+            placeholder="{{ 'general.search.placeholder' | t }}"
+          >
+          <button type="submit" class="rino-btn rino-btn--primary">{{ 'general.search.submit' | t }}</button>
+        </form>
+
+        {%- if search.performed -%}
+          <p class="rino-muted" style="margin-top: 1rem;">
+            {{ 'general.search.results_with_count' | t: count: search.results_count, terms: search.terms }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- if search.performed -%}
+        {%- if search.results_count > 0 -%}
+          <div class="rino-product-grid" style="--grid-cols-desktop: 4;">
+            {%- for item in search.results -%}
+              {%- case item.object_type -%}
+                {%- when 'product' -%}
+                  {% render 'product-card', card_product: item, lazy_load: true %}
+                {%- else -%}
+                  <article class="rino-product-card">
+                    <a href="{{ item.url }}" class="rino-cart-summary" style="height: 100%; justify-content: space-between;">
+                      <div>
+                        <span class="rino-eyebrow">{{ item.object_type | upcase }}</span>
+                        <h2 class="rino-product-card__title">{{ item.title | escape }}</h2>
+                        <p class="rino-muted" style="font-size: 0.9rem;">{{ item.content | strip_html | truncate: 110 }}</p>
+                      </div>
+                      <span class="rino-btn rino-btn--secondary">READ MORE</span>
+                    </a>
+                  </article>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+          {% render 'pagination', paginate: paginate %}
+        {%- else -%}
+          <div class="rino-cart-empty">
+            <p class="rino-cart-empty__text">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+            <a href="{{ routes.all_products_collection_url }}" class="rino-btn rino-btn--primary">
+              {{ 'general.404.shop_all' | t }}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Search Results",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 76
+    }
+  ]
+}
+{% endschema %}

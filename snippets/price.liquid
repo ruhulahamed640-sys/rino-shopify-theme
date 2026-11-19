@@ -1,0 +1,61 @@
+{%- comment -%}
+  RINO Price Snippet
+  Accepts:
+  - product: {Object} Product Liquid object (optional if target is passed)
+  - use_variant: {Boolean} Renders selected or first available variant price
+  - show_badges: {Boolean} Shows Sale / Sold Out badges inline
+{%- endcomment -%}
+{%- liquid
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 0
+  assign available = target.available | default: false
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="rino-price{% if on_sale %} rino-price--on-sale{% endif %}{% unless available %} rino-price--sold-out{% endunless %}" data-price-container>
+  <div class="rino-price__regular">
+    {%- if on_sale -%}
+      <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+      <span class="rino-price__current rino-price__current--sale" data-product-price>{{ price | money }}</span>
+      <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+      <s class="rino-price__compare" data-compare-price>{{ compare_at_price | money }}</s>
+    {%- else -%}
+      <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+      <span class="rino-price__current" data-product-price>{{ price | money }}</span>
+      <s class="rino-price__compare" data-compare-price hidden></s>
+    {%- endif -%}
+  </div>
+
+  {%- if target.unit_price_measurement -%}
+    <div class="rino-price__unit">
+      <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+      <span>{{ target.unit_price | money }}</span>
+      <span>/</span>
+      <span>
+        {%- if target.unit_price_measurement.reference_value != 1 -%}
+          {{ target.unit_price_measurement.reference_value }}
+        {%- endif -%}
+        {{ target.unit_price_measurement.reference_unit }}
+      </span>
+    </div>
+  {%- endif -%}
+
+  {%- if show_badges -%}
+    <div class="rino-price__badges">
+      {%- if available == false -%}
+        <span class="rino-badge rino-badge--sold-out" data-badge-sold-out>{{ 'products.product.sold_out' | t }}</span>
+      {%- elsif on_sale -%}
+        <span class="rino-badge rino-badge--sale" data-badge-sale>{{ 'products.product.on_sale' | t }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

@@ -1,0 +1,56 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "size-fit": {
+          "type": "accordion",
+          "settings": {
+            "heading": "SIZE & FIT",
+            "content": "<p>Boxy oversized streetwear cut. Available in XS, S, M, L, XL, and XXL. Take your true size for a relaxed drop-shoulder fit, or size down for a standard fit.</p>",
+            "open_default": true
+          }
+        },
+        "fabric-care": {
+          "type": "accordion",
+          "settings": {
+            "heading": "FABRIC & CARE",
+            "content": "<p>100% combed heavyweight 280GSM cotton. High-density custom screen print. Machine wash cold inside out and hang dry to preserve graphic detail.</p>",
+            "open_default": false
+          }
+        },
+        "shipping-returns": {
+          "type": "accordion",
+          "settings": {
+            "heading": "SHIPPING & RETURNS",
+            "content": "<p>Worldwide tracked shipping dispatches within 1–2 business days. Unworn pieces in original condition may be returned or exchanged within 30 days.</p>",
+            "open_default": false
+          }
+        }
+      },
+      "block_order": [
+        "size-fit",
+        "fabric-care",
+        "shipping-returns"
+      ],
+      "settings": {
+        "show_vendor": true,
+        "show_dynamic_checkout": true
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "show_related": true,
+        "related_heading": "COMPLETE THE ROTATION",
+        "products_to_show": 4,
+        "show_recently_viewed": true,
+        "recently_viewed_heading": "RECENTLY VIEWED"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}

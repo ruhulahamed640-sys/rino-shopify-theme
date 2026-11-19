@@ -1,0 +1,239 @@
+<footer class="rino-footer">
+  <div class="rino-container">
+    <div class="rino-footer__grid">
+      <div class="rino-footer__brand">
+        <a href="{{ routes.root_url }}" class="rino-header__logo" aria-label="{{ shop.name | escape }}">
+          {%- if section.settings.logo != blank -%}
+            {{
+              section.settings.logo
+              | image_url: width: 280
+              | image_tag:
+                class: 'rino-header__logo-img',
+                alt: shop.name | escape,
+                loading: 'lazy'
+            }}
+          {%- else -%}
+            <img
+              src="{{ 'icon-rino-mark.svg' | asset_url }}"
+              alt="{{ shop.name | escape }}"
+              class="rino-header__logo-img"
+              width="140"
+              height="34"
+              loading="lazy"
+            >
+          {%- endif -%}
+        </a>
+
+        {%- if section.settings.brand_description != blank -%}
+          <p class="rino-muted" style="margin-top: 1rem; max-width: 34ch;">
+            {{ section.settings.brand_description | escape }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.show_social -%}
+          <div class="rino-social-list" aria-label="Social media">
+            {%- if settings.social_instagram_link != blank -%}
+              <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'general.social.instagram' | t }}">
+                {% render 'icon', name: 'instagram', size: 18 %}
+              </a>
+            {%- endif -%}
+            {%- if settings.social_tiktok_link != blank -%}
+              <a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'general.social.tiktok' | t }}">
+                {% render 'icon', name: 'tiktok', size: 18 %}
+              </a>
+            {%- endif -%}
+            {%- if settings.social_youtube_link != blank -%}
+              <a href="{{ settings.social_youtube_link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'general.social.youtube' | t }}">
+                {% render 'icon', name: 'youtube', size: 18 %}
+              </a>
+            {%- endif -%}
+            {%- if settings.social_twitter_link != blank -%}
+              <a href="{{ settings.social_twitter_link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'general.social.twitter' | t }}">
+                {% render 'icon', name: 'twitter', size: 18 %}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'link_list' -%}
+            <div {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h2 class="rino-footer__heading">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="rino-footer__links" role="list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+          {%- when 'newsletter' -%}
+            <div {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h2 class="rino-footer__heading">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.subtext != blank -%}
+                <p class="rino-muted" style="font-size: 0.9375rem; margin-bottom: 1rem;">
+                  {{ block.settings.subtext | escape }}
+                </p>
+              {%- endif -%}
+              {%- form 'customer', id: 'RinoFooterNewsletter', class: 'rino-footer-newsletter' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="rino-newsletter-form__row">
+                  <label for="FooterNewsletterEmail-{{ section.id }}" class="visually-hidden">
+                    {{ 'sections.newsletter.label' | t }}
+                  </label>
+                  <input
+                    id="FooterNewsletterEmail-{{ section.id }}"
+                    type="email"
+                    name="contact[email]"
+                    class="rino-input"
+                    value="{{ form.email }}"
+                    placeholder="{{ 'sections.newsletter.placeholder' | t }}"
+                    autocomplete="email"
+                    required
+                  >
+                  <button type="submit" class="rino-btn rino-btn--primary">
+                    {{ 'sections.newsletter.button_label' | t }}
+                  </button>
+                </div>
+                {%- if form.posted_successfully? -%}
+                  <p class="rino-form-status rino-form-status--success" role="status">
+                    {{ 'sections.newsletter.success' | t }}
+                  </p>
+                {%- endif -%}
+                {%- if form.errors -%}
+                  <p class="rino-form-status rino-form-status--error" role="alert">
+                    {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+                  </p>
+                {%- endif -%}
+              {%- endform -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="rino-footer__bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}. {{ 'sections.footer.copyright' | t }}</p>
+
+      {%- if section.settings.show_policy and shop.policies.size > 0 -%}
+        <ul class="rino-footer__policies" role="list">
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              <li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <div class="rino-payment-list" aria-label="{{ 'sections.footer.payment' | t }}">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'rino-payment-icon' }}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_description",
+      "label": "Brand statement",
+      "default": "WEAR YOUR IDENTITY. Heavyweight custom-printed streetwear tees engineered for global street culture."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social media links",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policy",
+      "label": "Show store policy links",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Navigation column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "SHOP"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "EARLY ACCESS"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Description",
+          "default": "Get first access to limited RINO drops and studio editions."
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "link_list",
+        "settings": {
+          "heading": "SHOP"
+        }
+      },
+      {
+        "type": "link_list",
+        "settings": {
+          "heading": "BRAND"
+        }
+      },
+      {
+        "type": "newsletter"
+      }
+    ]
+  }
+}
+{% endschema %}

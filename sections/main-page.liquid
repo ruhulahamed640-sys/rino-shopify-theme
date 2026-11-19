@@ -1,0 +1,42 @@
+<section
+  class="rino-section"
+  style="--section-pt: {{ section.settings.padding_top }}px; --section-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="rino-container">
+    <div class="rino-narrow">
+      <span class="rino-eyebrow">RINO STUDIO</span>
+      <h1 class="rino-heading-lg" style="margin-bottom: 1.75rem;">{{ page.title | escape }}</h1>
+      <div class="rino-rte">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Content",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 76
+    }
+  ]
+}
+{% endschema %}

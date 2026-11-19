@@ -1,0 +1,123 @@
+<section
+  class="rino-section"
+  style="--section-pt: {{ section.settings.padding_top }}px; --section-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="rino-container">
+    <div class="rino-promo-banner" style="--banner-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};">
+      <div class="rino-promo-banner__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1800
+            | image_tag:
+              loading: 'lazy',
+              widths: '750, 1200, 1800',
+              sizes: '100vw',
+              alt: section.settings.image.alt | default: section.settings.heading | escape
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'rino-placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="rino-promo-banner__overlay" aria-hidden="true"></div>
+
+      <div class="rino-promo-banner__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="rino-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="rino-heading-lg">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtext != blank -%}
+          <p class="rino-hero__subtitle">{{ section.settings.subtext | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank -%}
+          <div class="rino-hero__actions">
+            <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="rino-btn rino-btn--primary">
+              {{ section.settings.cta_label | escape }}
+              {% render 'icon', name: 'arrow-right', size: 16 %}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promotional Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Campaign image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay darkness",
+      "default": 60
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "LIMITED GRAPHIC EDITION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "CONCRETE CAPSULE 01"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Supporting copy",
+      "default": "Numbered custom screen-printed tees. Once a graphic sells out, it never restocks."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "EXPLORE CAPSULE"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 44
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional Banner"
+    }
+  ]
+}
+{% endschema %}

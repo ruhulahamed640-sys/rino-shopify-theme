@@ -1,0 +1,24 @@
+<section class="rino-section">
+  <div class="rino-container">
+    <div class="rino-404">
+      <div class="rino-404__code" aria-hidden="true">{{ 'general.404.code' | t }}</div>
+      <h1 class="rino-heading-lg">{{ 'general.404.title' | t }}</h1>
+      <p class="rino-muted" style="max-width: 44ch;">{{ 'general.404.subtext' | t }}</p>
+      <div class="rino-hero__actions" style="justify-content: center;">
+        <a href="{{ routes.root_url }}" class="rino-btn rino-btn--primary">
+          {{ 'general.404.back_home' | t }}
+        </a>
+        <a href="{{ routes.all_products_collection_url }}" class="rino-btn rino-btn--secondary">
+          {{ 'general.404.shop_all' | t }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 Not Found",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,195 @@
+<section
+  class="rino-hero"
+  style="
+    --hero-min-height-desktop: {{ section.settings.height_desktop }}px;
+    --hero-min-height-mobile: {{ section.settings.height_mobile }}px;
+    --hero-pos: {{ section.settings.image_position }};
+    --hero-brightness: {{ section.settings.image_brightness | divided_by: 100.0 }};
+    --hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  "
+>
+  <div class="rino-container">
+    <div class="rino-hero__frame">
+      <div class="rino-hero__media">
+        {%- if section.settings.image != blank -%}
+          <picture>
+            {%- if section.settings.mobile_image != blank -%}
+              <source
+                media="(max-width: 749px)"
+                srcset="{{ section.settings.mobile_image | image_url: width: 900 }}"
+              >
+            {%- endif -%}
+            {{
+              section.settings.image
+              | image_url: width: 2000
+              | image_tag:
+                loading: 'eager',
+                fetchpriority: 'high',
+                widths: '750, 1100, 1500, 2000',
+                sizes: '100vw',
+                class: 'rino-hero__img',
+                alt: section.settings.image.alt | default: section.settings.heading | escape
+            }}
+          </picture>
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'rino-hero__img rino-placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="rino-hero__overlay" aria-hidden="true"></div>
+
+      <div class="rino-hero__content align-{{ section.settings.text_alignment }}">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="rino-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h1 class="rino-heading-xl">{{ section.settings.heading | escape }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.subtext != blank -%}
+          <p class="rino-hero__subtitle">{{ section.settings.subtext | escape }}</p>
+        {%- endif -%}
+
+        <div class="rino-hero__actions">
+          {%- if section.settings.primary_cta_label != blank -%}
+            <a href="{{ section.settings.primary_cta_link | default: routes.all_products_collection_url }}" class="rino-btn rino-btn--primary">
+              {{ section.settings.primary_cta_label | escape }}
+              {% render 'icon', name: 'arrow-right', size: 18 %}
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.secondary_cta_label != blank -%}
+            <a href="{{ section.settings.secondary_cta_link | default: routes.all_products_collection_url }}" class="rino-btn rino-btn--secondary">
+              {{ section.settings.secondary_cta_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop editorial image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image (optional)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image focal position",
+      "options": [
+        { "value": "center top", "label": "Top" },
+        { "value": "center center", "label": "Center" },
+        { "value": "center bottom", "label": "Bottom" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "image_brightness",
+      "min": 40,
+      "max": 110,
+      "step": 5,
+      "unit": "%",
+      "label": "Image brightness",
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "label": "Dark overlay opacity",
+      "default": 75
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "min": 480,
+      "max": 860,
+      "step": 20,
+      "unit": "px",
+      "label": "Desktop height",
+      "default": 680
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 420,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "label": "Mobile height",
+      "default": 540
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "RINO STUDIO — SEASON 01"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Headline",
+      "default": "OWN YOUR STREET."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Supporting text",
+      "default": "Heavyweight 280GSM custom-printed graphic tees built for bold urban silhouettes. Designed independently. Shipped worldwide."
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_label",
+      "label": "Primary CTA label",
+      "default": "SHOP THE DROP"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_label",
+      "label": "Secondary CTA label",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Secondary CTA link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,189 @@
+<section
+  class="rino-section"
+  style="--section-pt: {{ section.settings.padding_top }}px; --section-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="rino-container">
+    <div class="rino-section__header">
+      <div>
+        <span class="rino-eyebrow">RINO CHECKOUT</span>
+        <h1 class="rino-heading-lg">{{ 'cart.general.title' | t }}</h1>
+      </div>
+      <a href="{{ routes.all_products_collection_url }}" class="rino-btn rino-btn--secondary">
+        {{ 'cart.general.continue_shopping' | t }}
+      </a>
+    </div>
+
+    <div class="rino-drawer__error" data-cart-error role="alert" hidden></div>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="rino-cart-empty">
+        <p class="rino-cart-empty__text">{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="rino-btn rino-btn--primary">
+          {{ 'cart.general.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="rino-cart-page__grid">
+        <div>
+          <ul class="rino-cart-items" role="list">
+            {%- for item in cart.items -%}
+              <li class="rino-cart-item" data-cart-item-key="{{ item.key }}">
+                <a href="{{ item.url }}" class="rino-cart-item__media">
+                  {%- if item.image -%}
+                    <img
+                      src="{{ item.image | image_url: width: 220 }}"
+                      alt="{{ item.image.alt | default: item.product.title | escape }}"
+                      width="110"
+                      height="138"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+                </a>
+
+                <div class="rino-cart-item__details">
+                  <div class="rino-cart-item__top">
+                    <a href="{{ item.url }}" class="rino-cart-item__title">{{ item.product.title | escape }}</a>
+                    <button
+                      type="button"
+                      class="rino-cart-item__remove"
+                      data-cart-remove="{{ item.key }}"
+                      aria-label="{{ 'cart.general.remove' | t }} {{ item.product.title | escape }}"
+                    >
+                      {% render 'icon', name: 'trash', size: 18 %}
+                    </button>
+                  </div>
+
+                  {%- unless item.product.has_only_default_variant -%}
+                    <p class="rino-cart-item__variant">{{ item.variant.title | escape }}</p>
+                  {%- endunless -%}
+
+                  {%- if item.line_level_discount_allocations.size > 0 -%}
+                    <ul class="rino-cart-item__discounts" role="list">
+                      {%- for discount in item.line_level_discount_allocations -%}
+                        <li>{{ discount.discount_application.title }} (-{{ discount.amount | money }})</li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+
+                  <div class="rino-cart-item__bottom">
+                    <div class="rino-qty rino-qty--sm">
+                      <button
+                        type="button"
+                        class="rino-qty__btn"
+                        data-cart-qty-change
+                        data-key="{{ item.key }}"
+                        data-delta="-1"
+                        aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}"
+                      >
+                        {% render 'icon', name: 'minus', size: 14 %}
+                      </button>
+                      <input
+                        type="number"
+                        name="updates[]"
+                        value="{{ item.quantity }}"
+                        min="0"
+                        class="rino-qty__input"
+                        data-cart-qty-input
+                        data-key="{{ item.key }}"
+                        aria-label="{{ 'products.product.quantity.label' | t }}"
+                      >
+                      <button
+                        type="button"
+                        class="rino-qty__btn"
+                        data-cart-qty-change
+                        data-key="{{ item.key }}"
+                        data-delta="1"
+                        aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}"
+                      >
+                        {% render 'icon', name: 'plus', size: 14 %}
+                      </button>
+                    </div>
+
+                    <div class="rino-cart-item__price">
+                      {%- if item.original_line_price != item.final_line_price -%}
+                        <s class="rino-cart-item__price-compare">{{ item.original_line_price | money }}</s>
+                      {%- endif -%}
+                      <span>{{ item.final_line_price | money }}</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <aside class="rino-cart-summary">
+          <h2 class="rino-heading-md">ORDER SUMMARY</h2>
+
+          {%- if settings.cart_show_note -%}
+            <div>
+              <label for="CartNote" class="rino-label">{{ 'cart.general.note_label' | t }}</label>
+              <textarea
+                id="CartNote"
+                name="note"
+                class="rino-textarea"
+                placeholder="{{ 'cart.general.note_placeholder' | t }}"
+              >{{ cart.note }}</textarea>
+            </div>
+          {%- endif -%}
+
+          {%- if cart.cart_level_discount_applications.size > 0 -%}
+            <div>
+              {%- for discount in cart.cart_level_discount_applications -%}
+                <div class="rino-drawer__row">
+                  <span>{{ discount.title }}</span>
+                  <span>-{{ discount.total_allocated_amount | money }}</span>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div class="rino-drawer__row rino-drawer__subtotal">
+            <span>{{ 'cart.general.subtotal' | t }}</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+
+          {%- if settings.cart_shipping_notice != blank -%}
+            <p class="rino-drawer__notice">{{ settings.cart_shipping_notice | escape }}</p>
+          {%- endif -%}
+
+          <button type="submit" name="checkout" class="rino-btn rino-btn--primary rino-btn--full">
+            {{ 'cart.general.checkout' | t }}
+          </button>
+
+          <button type="submit" name="update" class="rino-btn rino-btn--secondary rino-btn--full">
+            {{ 'cart.general.update' | t }}
+          </button>
+        </aside>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 76
+    }
+  ]
+}
+{% endschema %}

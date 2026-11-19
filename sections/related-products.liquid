@@ -1,0 +1,110 @@
+{%- liquid
+  assign fallback_collection = product.collections.first
+-%}
+
+<section
+  class="rino-section"
+  style="--section-pt: {{ section.settings.padding_top }}px; --section-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="rino-container">
+    {%- if section.settings.show_related and fallback_collection != blank -%}
+      <div class="rino-section__header">
+        <div>
+          <span class="rino-eyebrow">RINO ROTATION</span>
+          <h2 class="rino-heading-md">{{ section.settings.related_heading | escape }}</h2>
+        </div>
+        <a href="{{ fallback_collection.url }}" class="rino-btn rino-btn--secondary">
+          {{ 'sections.featured_collection.view_all' | t }}
+        </a>
+      </div>
+
+      <div class="rino-product-grid" style="--grid-cols-desktop: 4;">
+        {%- assign shown = 0 -%}
+        {%- for related_product in fallback_collection.products -%}
+          {%- if related_product.id != product.id and shown < section.settings.products_to_show -%}
+            {% render 'product-card', card_product: related_product, lazy_load: true %}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_recently_viewed -%}
+      <div
+        style="margin-top: 4rem;"
+        data-recently-viewed
+        data-current-handle="{{ product.handle }}"
+        hidden
+      >
+        <div class="rino-section__header">
+          <div>
+            <span class="rino-eyebrow">YOUR HISTORY</span>
+            <h2 class="rino-heading-md">{{ section.settings.recently_viewed_heading | escape }}</h2>
+          </div>
+        </div>
+        <div class="rino-product-grid" style="--grid-cols-desktop: 4;" data-recently-viewed-grid></div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Related & Recently Viewed",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Show related products",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Related products heading",
+      "default": "COMPLETE THE ROTATION"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Related products count",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_recently_viewed",
+      "label": "Show recently viewed products",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "recently_viewed_heading",
+      "label": "Recently viewed heading",
+      "default": "RECENTLY VIEWED"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 76
+    }
+  ]
+}
+{% endschema %}

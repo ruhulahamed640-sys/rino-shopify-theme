@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "settings": {
+        "eyebrow": "DIRECT LINE",
+        "heading": "GET IN TOUCH.",
+        "subtext": "Questions about sizing, international shipping, or wholesale drops? Send us a message below."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

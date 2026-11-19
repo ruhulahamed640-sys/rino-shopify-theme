@@ -1,0 +1,124 @@
+<section
+  class="rino-section"
+  style="--section-pt: {{ section.settings.padding_top }}px; --section-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="rino-container">
+    <div class="rino-editorial-grid{% if section.settings.layout == 'image_right' %} rino-editorial-grid--reversed{% endif %}">
+      <div class="rino-editorial__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              widths: '480, 760, 1000, 1200',
+              sizes: '(min-width: 990px) 55vw, 100vw',
+              alt: section.settings.image.alt | default: section.settings.heading | escape
+          }}
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'rino-placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="rino-editorial__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="rino-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="rino-heading-lg">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <div class="rino-editorial__copy rino-rte">
+            {{ section.settings.text }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="rino-btn rino-btn--primary">
+            {{ section.settings.cta_label | escape }}
+            {% render 'icon', name: 'arrow-right', size: 16 %}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story (Image Text)",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Editorial image"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Desktop image placement",
+      "options": [
+        { "value": "image_left", "label": "Image left" },
+        { "value": "image_right", "label": "Image right" }
+      ],
+      "default": "image_left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE RINO MANIFESTO"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "WEAR YOUR IDENTITY."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Brand description",
+      "default": "<p>RINO was born from raw concrete, independent graphic art, and unapologetic self-expression. Every tee is cut in a structured boxy streetwear silhouette from combed heavyweight cotton and printed in small studio runs.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "READ OUR STORY"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 68
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Story (Image Text)"
+    }
+  ]
+}
+{% endschema %}

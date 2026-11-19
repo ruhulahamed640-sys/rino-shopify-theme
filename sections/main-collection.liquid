@@ -1,0 +1,232 @@
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <section
+    class="rino-section"
+    style="--section-pt: {{ section.settings.padding_top }}px; --section-pb: {{ section.settings.padding_bottom }}px;"
+  >
+    <div class="rino-container">
+      <header class="rino-collection-header">
+        <span class="rino-eyebrow">RINO COLLECTION</span>
+        <h1 class="rino-heading-lg">{{ collection.title | escape }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="rino-rte" style="margin-top: 0.85rem; max-width: 65ch;">
+            {{ collection.description }}
+          </div>
+        {%- endif -%}
+      </header>
+
+      <div class="rino-collection-toolbar">
+        <p class="rino-muted" style="margin: 0;">
+          {{ 'collections.general.product_count' | t: count: collection.products_count }}
+        </p>
+
+        {%- if section.settings.enable_sorting -%}
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <label for="CollectionSortBy" class="rino-label" style="margin: 0; white-space: nowrap;">
+              {{ 'collections.general.sort_by' | t }}
+            </label>
+            <select id="CollectionSortBy" class="rino-select" data-collection-sort style="width: auto; min-width: 190px;">
+              {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected="selected"{% endif %}>
+                  {{ option.name | escape }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- liquid
+        assign has_active_filters = false
+        for filter in collection.filters
+          if filter.active_values.size > 0
+            assign has_active_filters = true
+          endif
+          if filter.type == 'price_range'
+            if filter.min_value.value != nil or filter.max_value.value != nil
+              assign has_active_filters = true
+            endif
+          endif
+        endfor
+      -%}
+
+      {%- if has_active_filters -%}
+        <div class="rino-active-filters">
+          {%- for filter in collection.filters -%}
+            {%- for value in filter.active_values -%}
+              <a href="{{ value.url_to_remove }}" class="rino-filter-chip">
+                <span>{{ filter.label | escape }}: {{ value.label | escape }}</span>
+                <span aria-hidden="true">&times;</span>
+              </a>
+            {%- endfor -%}
+            {%- if filter.type == 'price_range' and filter.min_value.value != nil or filter.max_value.value != nil -%}
+              <a href="{{ filter.url_to_remove }}" class="rino-filter-chip">
+                <span>
+                  {{ filter.min_value.value | default: 0 | money }} &ndash; {{ filter.max_value.value | default: filter.range_max | money }}
+                </span>
+                <span aria-hidden="true">&times;</span>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+          <a href="{{ collection.url }}" class="rino-filter-chip">
+            {{ 'collections.general.reset_filters' | t }}
+          </a>
+        </div>
+      {%- endif -%}
+
+      <div class="rino-collection-layout{% if section.settings.enable_filtering and collection.filters.size > 0 %} has-filters{% endif %}">
+        {%- if section.settings.enable_filtering and collection.filters.size > 0 -%}
+          <aside class="rino-filters" aria-label="{{ 'collections.general.filter_by' | t }}">
+            <form data-collection-filter-form method="get" action="{{ collection.url }}">
+              {%- if collection.sort_by != blank -%}
+                <input type="hidden" name="sort_by" value="{{ collection.sort_by | escape }}">
+              {%- endif -%}
+
+              {%- for filter in collection.filters -%}
+                <details class="rino-filter-group" open>
+                  <summary>
+                    <span>{{ filter.label | escape }}</span>
+                    {% render 'icon', name: 'chevron-down', size: 16 %}
+                  </summary>
+
+                  {%- case filter.type -%}
+                    {%- when 'boolean' or 'list' -%}
+                      <div class="rino-filter-list">
+                        {%- for value in filter.values -%}
+                          <label class="rino-filter-checkbox">
+                            <input
+                              type="checkbox"
+                              name="{{ value.param_name }}"
+                              value="{{ value.value | escape }}"
+                              {% if value.active %}checked{% endif %}
+                              {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                            >
+                            <span>{{ value.label | escape }} ({{ value.count }})</span>
+                          </label>
+                        {%- endfor -%}
+                      </div>
+
+                    {%- when 'price_range' -%}
+                      <div class="rino-price-range">
+                        <div>
+                          <label for="FilterMin-{{ forloop.index }}" class="rino-label" style="font-size: 0.75rem;">
+                            {{ 'collections.general.price_from' | t }}
+                          </label>
+                          <input
+                            id="FilterMin-{{ forloop.index }}"
+                            class="rino-input"
+                            name="{{ filter.min_value.param_name }}"
+                            type="number"
+                            min="0"
+                            max="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                            value="{{ filter.min_value.value | divided_by: 100.0 | round }}"
+                            placeholder="0"
+                          >
+                        </div>
+                        <div>
+                          <label for="FilterMax-{{ forloop.index }}" class="rino-label" style="font-size: 0.75rem;">
+                            {{ 'collections.general.price_to' | t }}
+                          </label>
+                          <input
+                            id="FilterMax-{{ forloop.index }}"
+                            class="rino-input"
+                            name="{{ filter.max_value.param_name }}"
+                            type="number"
+                            min="0"
+                            max="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                            value="{{ filter.max_value.value | divided_by: 100.0 | round }}"
+                            placeholder="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                          >
+                        </div>
+                      </div>
+                      <button type="submit" class="rino-btn rino-btn--secondary rino-btn--full" style="margin-top: 0.75rem; min-height: 40px;">
+                        {{ 'collections.general.apply' | t }}
+                      </button>
+                  {%- endcase -%}
+                </details>
+              {%- endfor -%}
+            </form>
+          </aside>
+        {%- endif -%}
+
+        <div>
+          {%- if collection.products.size > 0 -%}
+            <div class="rino-product-grid" style="--grid-cols-desktop: {{ section.settings.columns_desktop }};">
+              {%- for product in collection.products -%}
+                {%- assign eager_first = true -%}
+                {%- if forloop.index <= 4 -%}{%- assign eager_first = false -%}{%- endif -%}
+                {% render 'product-card', card_product: product, lazy_load: eager_first %}
+              {%- endfor -%}
+            </div>
+            {% render 'pagination', paginate: paginate %}
+          {%- else -%}
+            <div class="rino-cart-empty">
+              <p class="rino-cart-empty__text">{{ 'collections.general.empty' | t }}</p>
+              <a href="{{ collection.url }}" class="rino-btn rino-btn--primary">
+                {{ 'collections.general.reset_filters' | t }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection Product Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "label": "Products per page",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable Shopify storefront filtering",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 8,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 76
+    }
+  ]
+}
+{% endschema %}

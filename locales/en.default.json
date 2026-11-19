@@ -1,0 +1,154 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "close": "Close",
+      "menu": "Menu",
+      "search": "Search",
+      "cart": "Shopping bag",
+      "account": "Account",
+      "home": "Home",
+      "loading": "Loading",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "search": {
+      "title": "Search RINO",
+      "placeholder": "Search tees, drops, graphics...",
+      "submit": "Search",
+      "results_with_count": {
+        "one": "{{ count }} result for \"{{ terms }}\"",
+        "other": "{{ count }} results for \"{{ terms }}\""
+      },
+      "no_results": "No pieces matched \"{{ terms }}\". Try a different keyword or browse our latest drop.",
+      "reset": "Clear search"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "page": "Page {{ number }}",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "social": {
+      "instagram": "RINO on Instagram",
+      "tiktok": "RINO on TikTok",
+      "youtube": "RINO on YouTube",
+      "twitter": "RINO on X"
+    },
+    "404": {
+      "code": "404",
+      "title": "OFF THE MAP.",
+      "subtext": "The page or drop you're looking for doesn't exist or has moved.",
+      "back_home": "Back to Home",
+      "shop_all": "Shop All Tees"
+    },
+    "password_page": {
+      "opening_soon": "DROP INCOMING.",
+      "login_form_heading": "Enter store using password",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Enter password",
+      "login_form_submit": "Enter",
+      "admin_link_html": "Are you the store owner? <a href=\"/admin\">Log in here</a>",
+      "powered_by_shopify_html": "Powered by Shopify"
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu",
+      "cart_count": {
+        "one": "{{ count }} item in bag",
+        "other": "{{ count }} items in bag"
+      }
+    },
+    "footer": {
+      "payment": "Payment methods",
+      "copyright": "All rights reserved."
+    },
+    "newsletter": {
+      "label": "Email address",
+      "placeholder": "Enter your email",
+      "button_label": "Join the Drop",
+      "success": "You're on the list. Watch your inbox for early drop access."
+    },
+    "featured_collection": {
+      "view_all": "View All",
+      "empty": "Select a collection in the Theme Editor to showcase RINO products."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "adding": "Adding...",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "on_sale": "Sale",
+      "in_stock": "In Stock — Ready to Ship",
+      "low_stock": "Low Stock",
+      "out_of_stock": "Currently Sold Out",
+      "quantity": {
+        "label": "Quantity",
+        "increase": "Increase quantity for {{ product }}",
+        "decrease": "Decrease quantity for {{ product }}"
+      },
+      "price": {
+        "regular_price": "Regular price",
+        "sale_price": "Sale price",
+        "unit_price": "Unit price"
+      },
+      "media": {
+        "gallery_label": "Product gallery",
+        "thumbnails_label": "Product thumbnails",
+        "load_video": "Play video"
+      },
+      "related_heading": "COMPLETE THE ROTATION",
+      "recently_viewed_heading": "RECENTLY VIEWED",
+      "size_guide": "Size & Fit",
+      "shipping_returns": "Shipping & Returns",
+      "care_instructions": "Fabric & Care"
+    }
+  },
+  "collections": {
+    "general": {
+      "empty": "No products found in this collection.",
+      "reset_filters": "Clear all filters",
+      "product_count": {
+        "one": "{{ count }} Piece",
+        "other": "{{ count }} Pieces"
+      },
+      "filter_and_sort": "Filter & Sort",
+      "filter_by": "Filter",
+      "sort_by": "Sort by",
+      "apply": "Apply",
+      "price_from": "From",
+      "price_to": "To"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "YOUR BAG",
+      "empty": "Your bag is currently empty.",
+      "continue_shopping": "Continue Shopping",
+      "subtotal": "Subtotal",
+      "discounts": "Discounts",
+      "checkout": "Checkout",
+      "view_cart": "View Full Bag",
+      "remove": "Remove",
+      "note_label": "Order note",
+      "note_placeholder": "Add delivery instructions or gift note...",
+      "update": "Update Bag",
+      "error": "Unable to update your bag. Please try again.",
+      "quantity_error": "You can only add {{ quantity }} of this item to your bag."
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "comment": "Message",
+      "send": "Send Message",
+      "post_success": "Thanks for reaching out. Our team will get back to you within 24–48 hours.",
+      "error_heading": "Please check the following:"
+    }
+  }
+}
