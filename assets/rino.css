@@ -2620,3 +2620,31 @@ html[data-rino-motion-ready="true"] .rino-product-card[data-rino-reveal].is-in-v
     gap: .35rem;
   }
 }
+
+
+/* Collection product view switcher */
+.rino-collection-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.rino-product-view-toggle{display:flex;align-items:center;gap:.35rem;margin-left:auto}
+.rino-view-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--rino-border,#333);border-radius:10px;color:var(--rino-text-secondary,#a5a19a);transition:background .2s ease,color .2s ease,border-color .2s ease}
+.rino-view-btn:hover,.rino-view-btn.is-active{background:var(--rino-accent,#ff5a1f);border-color:var(--rino-accent,#ff5a1f);color:#111}
+.rino-product-grid.is-list-view{grid-template-columns:minmax(0,1fr)!important;gap:1rem}
+.rino-product-grid.is-list-view .rino-product-card{display:grid;grid-template-columns:minmax(112px,220px) minmax(0,1fr);align-items:center;gap:1.25rem}
+.rino-product-grid.is-list-view .rino-product-card__media{aspect-ratio:1/1}
+.rino-product-grid.is-list-view .rino-product-card__info{padding:1rem}
+.rino-product-grid.is-list-view .rino-product-card__title{font-size:clamp(1.1rem,2vw,1.45rem)}
+@media(max-width:520px){
+ .rino-product-grid.is-list-view .rino-product-card{grid-template-columns:112px minmax(0,1fr);gap:.75rem}
+ .rino-product-grid.is-list-view .rino-product-card__info{padding:.35rem 0}
+ .rino-product-grid.is-list-view .rino-product-card__title{font-size:1rem}
+ .rino-product-grid.is-list-view .rino-quick-add{min-height:38px;padding:.55rem .7rem}
+}
+
+/* Product reviews section */
+.rino-reviews{border-top:1px solid var(--rino-border,#333);border-bottom:1px solid var(--rino-border,#333)}
+.rino-reviews__summary{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;margin:1.25rem 0 2rem}
+.rino-reviews__score{font-family:var(--rino-font-display,'Oswald',sans-serif);font-size:clamp(2.5rem,6vw,4rem);line-height:1}
+.rino-reviews__stars{position:relative;display:inline-block;color:#555;font-size:1.35rem;letter-spacing:.12em;line-height:1}
+.rino-reviews__stars-fill{position:absolute;inset:0 auto 0 0;overflow:hidden;white-space:nowrap;color:var(--rino-accent,#ff5a1f);width:var(--rating-percent,0%)}
+.rino-reviews__app-block{margin-top:1.5rem}
+.rino-reviews__empty{padding:1.25rem;border:1px solid var(--rino-border,#333);border-radius:14px;color:var(--rino-text-secondary,#a5a19a)}
+@media(prefers-reduced-motion:reduce){.rino-view-btn{transition:none}}
