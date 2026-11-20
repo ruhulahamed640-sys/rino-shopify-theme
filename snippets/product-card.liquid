@@ -18,7 +18,7 @@
   endif
 -%}
 
-<article class="rino-product-card">
+<article class="rino-product-card" data-product-reveal-card>
   <a href="{{ card_product.url }}" class="rino-product-card__media-link" aria-label="{{ card_product.title | escape }}">
     <div class="rino-product-card__media{% if secondary_image != blank %} has-hover-image{% endif %}">
       {%- if primary_image != blank -%}
@@ -60,11 +60,33 @@
     </div>
   </a>
 
-  <div class="rino-product-card__info">
-    <h3 class="rino-product-card__title">
-      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
-    </h3>
-    {% render 'price', product: card_product, use_variant: false, show_badges: false %}
+  {%- assign card_rating = card_product.metafields.reviews.rating.value -%}
+  {%- assign card_rating_count = card_product.metafields.reviews.rating_count.value | default: 0 -%}
+  <div class="rino-product-card__info" data-product-card-info>
+    <div class="rino-product-card__meta">
+      <h3 class="rino-product-card__title">
+        <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+      </h3>
+      {% render 'price', product: card_product, use_variant: false, show_badges: false %}
+      {%- if card_rating != blank and card_rating_count > 0 -%}
+        <div class="rino-product-card__rating" aria-label="{{ card_rating.rating }} out of 5 stars, {{ card_rating_count }} reviews">
+          <span class="rino-product-card__rating-stars" aria-hidden="true">★★★★★</span>
+          <span>{{ card_rating.rating | round: 1 }} · {{ card_rating_count }} REVIEWS</span>
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="rino-product-card__variants" aria-label="Available variants">
+      {%- assign shown_variants = 0 -%}
+      {%- for variant in card_product.variants -%}
+        {%- if variant.available and shown_variants < 5 -%}
+          <a class="rino-product-card__variant" href="{{ card_product.url }}?variant={{ variant.id }}" aria-label="{{ variant.title | escape }}">{{ variant.title | escape }}</a>
+          {%- assign shown_variants = shown_variants | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if card_product.variants.size > 5 -%}
+        <a class="rino-product-card__variant rino-product-card__variant--more" href="{{ card_product.url }}">+{{ card_product.variants.size | minus: 5 }} MORE</a>
+      {%- endif -%}
+    </div>
     <div class="rino-product-card__actions">
       {%- if card_product.available and card_product.has_only_default_variant -%}
         <form method="post" action="{{ routes.cart_add_url }}" class="rino-quick-add-form" data-rino-quick-add>
