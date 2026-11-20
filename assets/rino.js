@@ -618,6 +618,19 @@
       };
       viewButtons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.productView)));
       setView(savedView);
+
+      const cards = productGrid.querySelectorAll('[data-product-reveal-card]');
+      const touchMode = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+      if (touchMode && 'IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            entry.target.classList.toggle('is-card-visible', entry.isIntersecting && entry.intersectionRatio >= 0.42);
+          });
+        }, { threshold: [0, 0.2, 0.42, 0.7], rootMargin: '0px 0px -6% 0px' });
+        cards.forEach((card) => revealObserver.observe(card));
+      } else if (touchMode) {
+        cards.forEach((card) => card.classList.add('is-card-visible'));
+      }
     }
 
     const filterForm = document.querySelector('[data-collection-filter-form]');
