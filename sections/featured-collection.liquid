@@ -1,5 +1,8 @@
 {%- liquid
   assign featured_collection = section.settings.collection
+  if featured_collection == blank or featured_collection.products_count == 0
+    assign featured_collection = collections['all']
+  endif
   assign limit = section.settings.products_to_show
 -%}
 
@@ -20,7 +23,7 @@
 
       {%- if section.settings.show_view_all and featured_collection != blank -%}
         <a href="{{ featured_collection.url }}" class="rino-btn rino-btn--secondary">
-          {{ section.settings.view_all_label | default: 'sections.featured_collection.view_all' | t }}
+          {{ section.settings.view_all_label | default: 'VIEW ALL' | escape }}
           {% render 'icon', name: 'arrow-right', size: 16 %}
         </a>
       {%- endif -%}
