@@ -110,21 +110,11 @@
         "padding_top": 50,
         "padding_bottom": 70
       }
-    },
-    "liquid-flow": {
-      "type": "liquid-flow",
-      "settings": {
-        "liquid_color": "#FF5A1F",
-        "height": 210,
-        "speed": 9,
-        "show_caption": false
-      }
     }
   },
   "order": [
     "hero",
     "marquee",
-    "liquid-flow",
     "featured-collection",
     "brand-story",
     "promotional-banner",
